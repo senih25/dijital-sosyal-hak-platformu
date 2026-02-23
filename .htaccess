@@ -10,6 +10,9 @@ AddDefaultCharset UTF-8
     RewriteCond %{REQUEST_URI} ^/(admin|assets|uploads|config|includes|user) [NC]
     RewriteRule ^ - [L]
 
+    # API ana endpoint
+    RewriteRule ^api/?$ api/index.php [L,QSA]
+
     # --- VAR OLAN DOSYA VE KLASÖRLERE DOKUNMA ---
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
@@ -18,16 +21,26 @@ AddDefaultCharset UTF-8
     # --- İÇERİK SAYFALARI İÇİN SEO URL ---
     # /icerik/slug → icerik.php?slug=slug
     RewriteRule ^icerik/([a-zA-Z0-9-]+)/?$ icerik.php?slug=$1 [L,QSA]
-
-    # Dizin listelemeyi engelle
-    Options -Indexes
 </IfModule>
+
+# Dizin listelemeyi engelle
+Options -Indexes
 
 # Güvenlik
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # CDN/proxy cache davranışını iyileştirme
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|webp|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "public, max-age=300, s-maxage=600"
+    </FilesMatch>
 </IfModule>
 
 # Dosya koruması
@@ -48,6 +61,8 @@ AddDefaultCharset UTF-8
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/pdf "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"
@@ -58,5 +73,5 @@ AddDefaultCharset UTF-8
 
 # Compression
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>

@@ -23,7 +23,33 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dijital Sosyal Hak Rehberliği - Admin Panel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="description" content="Dijital Sosyal Hak Platformu yönetim paneli. SGK, e-Nabız ve e-Devlet entegrasyonuna hazır sosyal hak yönetim altyapısı.">
+    <meta name="keywords" content="sosyal haklar, SGK, e-Nabız, e-Devlet, sosyal yardım, engelli hakları">
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dijital Sosyal Hak Rehberliği">
+    <meta property="og:description" content="Sosyal hak danışmanlığı ve dijital başvuru altyapısı.">
+    <meta property="og:url" content="https://sosyalhizmetdanismanligi.com/">
+    <meta property="og:site_name" content="Dijital Sosyal Hak Platformu">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://sosyalhizmetdanismanligi.com/">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="preload" as="style" href="style.min.css">
+    <link rel="stylesheet" href="style.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Dijital Sosyal Hak Platformu",
+      "url": "https://sosyalhizmetdanismanligi.com",
+      "description": "Türkiye'de sosyal haklara erişim için dijital rehberlik platformu.",
+      "sameAs": [
+        "https://www.instagram.com/sosyalhizmet.danismanligi/"
+      ]
+    }
+    </script>
     <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -92,5 +118,6 @@ if (isset($_POST['login'])) {
             </div>
         </div>
     </div>
+    <script src="script.min.js" defer></script>
 </body>
 </html>

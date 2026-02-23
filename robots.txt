@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /uploads/
+
+Sitemap: https://sosyalhizmetdanismanligi.com/sitemap.xml
