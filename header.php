@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dijital Sosyal Hak Platformu</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -14,10 +14,11 @@
         </div>
         <nav>
             <a href="/">Ana Sayfa</a>
-            <a href="#">Hizmetler</a>
-            <a href="#">Hak Rehberi</a>
-            <a href="#">Hesaplama</a>
-            <a href="#">İletişim</a>
+            <a href="/hizmetlerimiz.php">Hizmetler</a>
+            <a href="/rehberlik.php">Hak Rehberi</a>
+            <a href="/hesaplama_araclari_calisir.php">Hesaplama</a>
+            <a href="/iletisim.php">İletişim</a>
+            <a href="/ozel-moduller.php">Özel Modüller</a>
         </nav>
     </div>
 </header>

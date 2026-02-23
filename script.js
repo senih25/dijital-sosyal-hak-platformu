@@ -364,3 +364,75 @@ if (scrollToTopBtn) {
         });
     });
 }
+
+// ========== ÖZEL MODÜLLER ==========
+document.addEventListener('DOMContentLoaded', function () {
+    setupMevzuatTakip();
+    setupRandevuYonetimi();
+    setupBelgeYonetimi();
+});
+
+function showModuleResult(elementId, message) {
+    const box = document.getElementById(elementId);
+    if (!box) return;
+
+    box.className = 'module-result success';
+    box.innerHTML = message;
+}
+
+function setupMevzuatTakip() {
+    const form = document.getElementById('mevzuat-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const keyword = document.getElementById('mevzuat-keyword').value.trim();
+        const impact = document.getElementById('mevzuat-impact').value;
+
+        showModuleResult(
+            'mevzuat-result',
+            `<strong>Takip aktif:</strong> "${keyword}" anahtar kelimesi için <strong>${impact}</strong> etki düzeyi eşik alındı. RSS kaynakları saatlik izlenecek ve değişiklikler bildirim merkezine gönderilecek.`
+        );
+    });
+}
+
+function setupRandevuYonetimi() {
+    const form = document.getElementById('randevu-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const type = document.getElementById('appointment-type').value;
+        const date = document.getElementById('meeting-date').value;
+        const payment = document.getElementById('payment-status').value;
+
+        const typeText = type === 'online' ? 'Online görüşme' : 'Yüz yüze görüşme';
+        const paymentText = payment === 'odendi' ? 'ödeme tamamlandı' : 'ödeme beklemede';
+        const meetingLink = type === 'online' ? 'https://meet.ornek-platform.local/oturum-123' : 'Gerekmiyor';
+
+        showModuleResult(
+            'randevu-result',
+            `<strong>${typeText}</strong> için ${date} tarihine plan oluşturuldu, ${paymentText}. Otomatik hatırlatmalar sıraya alındı. Video linki: <em>${meetingLink}</em>.`
+        );
+    });
+}
+
+function setupBelgeYonetimi() {
+    const form = document.getElementById('belge-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('document-name').value.trim();
+        const category = document.getElementById('document-category').value;
+        const expiry = document.getElementById('document-expiry').value;
+
+        showModuleResult(
+            'belge-result',
+            `<strong>${name}</strong> belgesi <strong>${category}</strong> kategorisine şifreli olarak kaydedilecek. Arama indeksine eklendi ve ${expiry} için son kullanım uyarı takvimi oluşturuldu. Paylaşım linkleri varsayılan olarak 72 saat geçerli olacak.`
+        );
+    });
+}
