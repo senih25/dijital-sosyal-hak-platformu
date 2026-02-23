@@ -2,22 +2,21 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dijital Sosyal Hak Platformu</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header class="main-header">
     <div class="container header-flex">
-        <div class="logo">
-            Dijital Sosyal Hizmet
-        </div>
+        <a class="logo" href="/">
+            <span class="logo-mark">DSH</span>
+            Dijital Sosyal Hak Platformu
+        </a>
         <nav>
-            <a href="/">Ana Sayfa</a>
-            <a href="#">Hizmetler</a>
-            <a href="#">Hak Rehberi</a>
-            <a href="#">Hesaplama</a>
-            <a href="#">İletişim</a>
+            <a href="yazilar.php">İçerik Merkezi</a>
+            <a href="social-media.php">Sosyal Medya Merkezi</a>
+            <a href="MARKA_REHBERI.md">Marka Rehberi</a>
         </nav>
     </div>
 </header>

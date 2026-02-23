@@ -1,52 +1,161 @@
-.trust-section {
-    background: #ffffff;
-    padding: 50px 0;
-    border-top: 1px solid #eee;
+:root {
+    --brand-primary: #0057b8;
+    --brand-secondary: #00a9a5;
+    --brand-accent: #ffb703;
+    --brand-dark: #1f2937;
+    --brand-light: #f4f7fb;
+    --brand-border: #d6dfeb;
+    --font-heading: "Poppins", "Segoe UI", Arial, sans-serif;
+    --font-body: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
-.trust-grid {
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--brand-light);
+    color: var(--brand-dark);
+    line-height: 1.6;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+.main-header {
+    background: #fff;
+    border-bottom: 1px solid var(--brand-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--brand-primary);
+}
+
+.logo-mark {
+    width: 2rem;
+    height: 2rem;
+    border-radius: .5rem;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+    color: #fff;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    place-items: center;
+    font-size: .85rem;
 }
 
-.trust-item {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
+nav { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+nav a {
+    text-decoration: none;
+    color: var(--brand-dark);
     font-weight: 600;
-    font-size: 15px;
+    font-size: .95rem;
 }
 
-    .trust-item small {
-        display: block;
-        font-weight: normal;
-        margin-top: 8px;
-        font-size: 13px;
-        color: #555;
-    }
+nav a:hover { color: var(--brand-primary); }
 
-.latest-content {
-    padding: 60px 0;
-    background: #f8f9fa;
+.page-hero {
+    background: linear-gradient(115deg, var(--brand-primary), #2e7cc9 55%, var(--brand-secondary));
+    color: #fff;
+    padding: 3.2rem 0;
+    margin-bottom: 2rem;
 }
 
-.content-item {
-    background: white;
-    padding: 20px;
+.page-hero h1 {
+    font-family: var(--font-heading);
+    margin: 0 0 .5rem;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--brand-border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 8px 22px rgba(31, 41, 55, 0.06);
+}
+
+.badge {
+    display: inline-block;
+    background: #e8f3ff;
+    color: var(--brand-primary);
+    border-radius: 999px;
+    padding: .2rem .6rem;
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: .7rem;
+    margin-bottom: 1rem;
+}
+
+input, select, button, textarea {
+    width: 100%;
+    border: 1px solid var(--brand-border);
     border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: .65rem .75rem;
+    font: inherit;
 }
 
-    .content-item h3 {
-        margin-top: 0;
-    }
+button {
+    background: var(--brand-primary);
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
 
-    .content-item a {
-        display: inline-block;
-        margin-top: 10px;
-        color: #0d6efd;
-        text-decoration: none;
-        font-weight: 600;
-    }
+button.secondary { background: #334155; }
+
+.tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+.tag {
+    padding: .2rem .5rem;
+    border-radius: 6px;
+    background: #ecfeff;
+    color: #0f766e;
+    font-size: .72rem;
+}
+
+.main-footer {
+    margin-top: 2.5rem;
+    background: #fff;
+    border-top: 1px solid var(--brand-border);
+    padding: 1.2rem 0;
+    color: #475569;
+    font-size: .9rem;
+}
+
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { border-bottom: 1px solid var(--brand-border); padding: .55rem .4rem; text-align: left; }
+
+@media (max-width: 800px) {
+    .filter-row { grid-template-columns: 1fr; }
+    nav { gap: .6rem; }
+}
