@@ -364,3 +364,123 @@ if (scrollToTopBtn) {
         });
     });
 }
+
+// ========== AI CHATBOT ==========
+(function initEnhancedChatbot() {
+    const chatRoot = document.getElementById('ai-chatbot');
+    if (!chatRoot) return;
+
+    const logEl = document.getElementById('chat-log');
+    const formEl = document.getElementById('chat-form');
+    const inputEl = document.getElementById('chat-input');
+    const langEl = document.getElementById('chat-lang');
+    const voiceBtn = document.getElementById('voice-btn');
+    const learningScoreEl = document.getElementById('learning-score');
+
+    const state = {
+        lang: 'tr',
+        context: [],
+        learningScore: Number(localStorage.getItem('aiLearningScore') || 0)
+    };
+
+    const intents = {
+        tr: {
+            gelir: 'Gelir testi için hane geliri ve kişi sayısını paylaşın, size uygun destekleri hesaplayayım.',
+            engelli: 'Engellilik oranına göre ulaşım, aylık ve bakım yardımlarını kontrol edebiliriz.',
+            belge: 'Rapor yükleyerek OCR tabanlı belge analizi ile risk ve kategori sonucu alabilirsiniz.',
+            varsayilan: 'Sorunuzu anladım. Gelir testi, engellilik hakları, başvuru evrakları veya destek programları hakkında detay verebilirim.'
+        },
+        en: {
+            income: 'Share household income and member count. I can estimate social support eligibility.',
+            disability: 'I can map disability rate to transport, allowance and care benefits.',
+            report: 'Upload a report to run OCR-based extraction, categorization and risk analysis.',
+            default: 'I can help with eligibility, document requirements and social rights guidance.'
+        }
+    };
+
+    function addMessage(text, role) {
+        const div = document.createElement('div');
+        div.className = `chat-msg ${role}`;
+        div.textContent = text;
+        logEl.appendChild(div);
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function detectIntent(message) {
+        const normalized = message.toLowerCase();
+        if (state.lang === 'tr') {
+            if (normalized.includes('gelir') || normalized.includes('maaş')) return intents.tr.gelir;
+            if (normalized.includes('engel') || normalized.includes('rapor')) return intents.tr.engelli;
+            if (normalized.includes('belge') || normalized.includes('ocr')) return intents.tr.belge;
+            return intents.tr.varsayilan;
+        }
+        if (normalized.includes('income') || normalized.includes('salary')) return intents.en.income;
+        if (normalized.includes('disability') || normalized.includes('rate')) return intents.en.disability;
+        if (normalized.includes('document') || normalized.includes('ocr') || normalized.includes('report')) return intents.en.report;
+        return intents.en.default;
+    }
+
+    function respond(message) {
+        const base = detectIntent(message);
+        const contextualSuffix = state.context.length
+            ? (state.lang === 'tr' ? ` Önceki sorunuz: "${state.context[state.context.length - 1]}".` : ` Previous context: "${state.context[state.context.length - 1]}".`)
+            : '';
+
+        const response = base + contextualSuffix;
+        addMessage(response, 'bot');
+
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(response);
+            utterance.lang = state.lang === 'tr' ? 'tr-TR' : 'en-US';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        state.learningScore += 1;
+        localStorage.setItem('aiLearningScore', String(state.learningScore));
+        learningScoreEl.textContent = (state.lang === 'tr' ? 'Öğrenme skoru: ' : 'Learning score: ') + state.learningScore;
+    }
+
+    formEl.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const message = inputEl.value.trim();
+        if (!message) return;
+
+        addMessage(message, 'user');
+        state.context.push(message);
+        if (state.context.length > 4) state.context.shift();
+
+        respond(message);
+        inputEl.value = '';
+    });
+
+    langEl.addEventListener('change', function () {
+        state.lang = this.value;
+        chatRoot.setAttribute('data-lang', state.lang);
+        addMessage(state.lang === 'tr' ? 'Dil Türkçe olarak güncellendi.' : 'Language switched to English.', 'bot');
+        learningScoreEl.textContent = (state.lang === 'tr' ? 'Öğrenme skoru: ' : 'Learning score: ') + state.learningScore;
+    });
+
+    voiceBtn.addEventListener('click', function () {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            addMessage(state.lang === 'tr' ? 'Tarayıcı sesli giriş desteklemiyor.' : 'Voice input is not supported in this browser.', 'bot');
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = state.lang === 'tr' ? 'tr-TR' : 'en-US';
+        recognition.start();
+
+        recognition.onresult = function (event) {
+            const spoken = event.results[0][0].transcript;
+            inputEl.value = spoken;
+            addMessage(spoken, 'user');
+            state.context.push(spoken);
+            respond(spoken);
+            inputEl.value = '';
+        };
+    });
+
+    learningScoreEl.textContent = 'Öğrenme skoru: ' + state.learningScore;
+    addMessage('Merhaba! Size sosyal hak, gelir testi ve başvuru süreçlerinde yardımcı olabilirim.', 'bot');
+})();

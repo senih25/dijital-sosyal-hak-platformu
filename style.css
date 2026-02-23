@@ -50,3 +50,22 @@
         text-decoration: none;
         font-weight: 600;
     }
+/* AI Entegrasyonu */
+.ai-page { padding: 40px 0 70px; }
+.ai-hero { margin-bottom: 24px; }
+.ai-card { background: #fff; border: 1px solid #e7ebf0; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(0,0,0,.05); }
+.stack { display: grid; gap: 10px; max-width: 520px; }
+.grid-form { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; }
+.grid-form .full { grid-column: 1/-1; }
+.ai-card input, .ai-card select, .ai-card button { padding: 10px; border-radius: 8px; border: 1px solid #ccd5df; }
+.ai-card button { background: #0d6efd; color:#fff; border:none; cursor:pointer; }
+.result-panel { background: #f8fbff; border-left: 4px solid #0d6efd; padding: 14px; margin-top: 14px; }
+.alert-box.error { background:#ffe8ea; color:#9c1f28; padding:12px; border-radius:8px; margin-bottom:16px; }
+.chatbot-shell { border: 1px solid #d8e1eb; border-radius: 12px; overflow: hidden; }
+.chat-header { display:flex; justify-content: space-between; align-items:center; background:#f3f7ff; padding:10px 12px; }
+.chat-log { min-height: 220px; max-height: 280px; overflow:auto; padding: 10px 12px; background:#fff; }
+.chat-msg { margin-bottom: 8px; padding: 8px 10px; border-radius: 8px; max-width: 85%; }
+.chat-msg.user { margin-left:auto; background:#0d6efd; color:white; }
+.chat-msg.bot { background:#eff4fb; color:#1e2c3b; }
+.chat-form { display:flex; gap:8px; padding:10px; border-top: 1px solid #e5ebf2; }
+.chat-form input { flex:1; }

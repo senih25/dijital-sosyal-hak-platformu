@@ -215,6 +215,168 @@ function sendEmail($to, $subject, $message) {
     return mail($to, $subject, $message, $headers);
 }
 
+
+
+// Basit OCR + belge analiz sistemi
+function extractTextFromDocument($filePath, $originalName = '') {
+    $extension = strtolower(pathinfo($originalName ?: $filePath, PATHINFO_EXTENSION));
+
+    if ($extension === 'txt') {
+        return trim((string) file_get_contents($filePath));
+    }
+
+    // PDF/DOCX/Image için örnek OCR akışı (üretim ortamında Tesseract/Azure/AWS Textract bağlanabilir)
+    $normalizedName = strtolower($originalName);
+    $tokens = preg_split('/[^a-z0-9çğıöşü]+/iu', $normalizedName);
+    $tokens = array_filter($tokens);
+
+    $hints = [];
+    foreach ($tokens as $token) {
+        if (in_array($token, ['kanser', 'onkoloji', 'kemoterapi', 'radyoterapi'], true)) {
+            $hints[] = 'Onkoloji tedavi geçmişi ifadesi tespit edildi';
+        }
+        if (in_array($token, ['diyabet', 'şeker'], true)) {
+            $hints[] = 'Diyabet ile ilişkili anahtar kelime bulundu';
+        }
+        if (in_array($token, ['kalp', 'kardiyo', 'hipertansiyon'], true)) {
+            $hints[] = 'Kardiyovasküler risk göstergesi bulundu';
+        }
+        if (in_array($token, ['engelli', 'rapor', 'heyet'], true)) {
+            $hints[] = 'Engellilik raporu bağlamı algılandı';
+        }
+    }
+
+    if (empty($hints)) {
+        $hints[] = 'OCR örnek motoru dosya adından sınırlı metin çıkardı';
+    }
+
+    return implode('. ', $hints) . '.';
+}
+
+function analyzeHealthReportWithAI($extractedText) {
+    $text = mb_strtolower($extractedText, 'UTF-8');
+
+    $categories = [
+        'Kronik Hastalık' => ['diyabet', 'hipertansiyon', 'koah', 'astım', 'kronik'],
+        'Onkoloji' => ['kanser', 'onkoloji', 'kemoterapi', 'radyoterapi', 'metastaz'],
+        'Nörolojik Durum' => ['epilepsi', 'parkinson', 'alzheimer', 'nöroloji', 'felç'],
+        'Ortopedik Değerlendirme' => ['ortopedi', 'amputasyon', 'protezi', 'hareket kısıtlılığı'],
+        'Psikiyatrik Değerlendirme' => ['depresyon', 'anksiyete', 'bipolar', 'psikoz', 'travma']
+    ];
+
+    $matchedCategories = [];
+    foreach ($categories as $category => $keywords) {
+        foreach ($keywords as $keyword) {
+            if (mb_stripos($text, $keyword, 0, 'UTF-8') !== false) {
+                $matchedCategories[] = $category;
+                break;
+            }
+        }
+    }
+
+    if (empty($matchedCategories)) {
+        $matchedCategories[] = 'Genel Sağlık Değerlendirmesi';
+    }
+
+    $riskRules = [
+        'Yüksek' => ['metastaz', 'yoğun bakım', 'acil', 'ileri evre', 'çoklu organ'],
+        'Orta' => ['ameliyat', 'kronik', 'düzenli takip', 'ilaç raporu', 'engel oranı'],
+        'Düşük' => ['kontrol', 'stabil', 'hafif', 'takip önerildi']
+    ];
+
+    $riskScore = 10;
+    $riskSignals = [];
+    foreach ($riskRules['Yüksek'] as $signal) {
+        if (mb_stripos($text, $signal, 0, 'UTF-8') !== false) {
+            $riskScore += 25;
+            $riskSignals[] = $signal;
+        }
+    }
+    foreach ($riskRules['Orta'] as $signal) {
+        if (mb_stripos($text, $signal, 0, 'UTF-8') !== false) {
+            $riskScore += 12;
+            $riskSignals[] = $signal;
+        }
+    }
+    foreach ($riskRules['Düşük'] as $signal) {
+        if (mb_stripos($text, $signal, 0, 'UTF-8') !== false) {
+            $riskScore -= 5;
+        }
+    }
+
+    $riskScore = max(0, min(100, $riskScore));
+    $riskLevel = $riskScore >= 65 ? 'Yüksek' : ($riskScore >= 35 ? 'Orta' : 'Düşük');
+
+    return [
+        'extracted_text' => $extractedText,
+        'categories' => array_values(array_unique($matchedCategories)),
+        'risk_score' => $riskScore,
+        'risk_level' => $riskLevel,
+        'risk_signals' => array_values(array_unique($riskSignals))
+    ];
+}
+
+// Sosyal hak uygunluk tahmini (kural tabanlı ML benzeri skorlayıcı)
+function predictSocialBenefitEligibility($userData) {
+    $income = (float)($userData['household_income'] ?? 0);
+    $members = max(1, (int)($userData['household_members'] ?? 1));
+    $disabilityRate = max(0, min(100, (int)($userData['disability_rate'] ?? 0)));
+    $chronicIllness = !empty($userData['chronic_illness']);
+    $workingStatus = $userData['working_status'] ?? 'calisiyor';
+
+    $perCapita = $income / $members;
+    $minWage = 17002.12;
+    $threshold = $minWage / 3;
+
+    $score = 0.20;
+
+    if ($perCapita <= $threshold) {
+        $score += 0.35;
+    } elseif ($perCapita <= $threshold * 1.6) {
+        $score += 0.20;
+    } else {
+        $score += 0.05;
+    }
+
+    $score += min(0.30, $disabilityRate / 100 * 0.30);
+
+    if ($chronicIllness) {
+        $score += 0.08;
+    }
+
+    if ($workingStatus === 'calismiyor') {
+        $score += 0.07;
+    } elseif ($workingStatus === 'duzensiz') {
+        $score += 0.04;
+    }
+
+    $successProbability = max(0, min(0.98, $score));
+
+    $suggestions = [];
+    if ($perCapita > $threshold) {
+        $suggestions[] = 'Gelir testi başvurusunda güncel gider kalemlerinizi belgeleyin.';
+    }
+    if ($disabilityRate < 40) {
+        $suggestions[] = 'Yeni sağlık kurulu değerlendirmesi ile engel oranı güncellemesini düşünün.';
+    } else {
+        $suggestions[] = 'Engelli kimlik kartı ve ulaşım destekleri için belediye başvurularını kontrol edin.';
+    }
+    if ($chronicIllness) {
+        $suggestions[] = 'Kronik hastalık raporlarını e-Nabız çıktıları ile destekleyin.';
+    }
+
+    $segment = $successProbability >= 0.70 ? 'Yüksek Potansiyel' : ($successProbability >= 0.45 ? 'Geliştirilebilir' : 'Destek Gerekiyor');
+
+    return [
+        'success_probability' => round($successProbability * 100, 2),
+        'segment' => $segment,
+        'per_capita_income' => round($perCapita, 2),
+        'threshold' => round($threshold, 2),
+        'suggestions' => $suggestions
+    ];
+}
+
+
 // Sipariş numarası oluştur
 function generateOrderNumber() {
     return 'SHR' . date('Ymd') . rand(1000, 9999);
