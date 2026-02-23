@@ -19,6 +19,7 @@
                 <a class="nav-link" href="hesaplama-araclari.php">Hesaplama</a>
                 <a class="nav-link active" href="sss.php">SSS</a>
                 <a class="nav-link" href="iletisim.php">İletişim</a>
+                <a class="nav-link" href="dijital-danismanlik.php">Dijital Danışmanlık</a>
             </div>
         </div>
     </nav>
