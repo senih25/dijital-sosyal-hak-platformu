@@ -29,16 +29,19 @@ include 'includes/header.php';
 ?>
 
 <!-- Page Header -->
-<section class="hero-section" style="padding: 60px 0;">
+<section class="hero-section" style="padding: 60px 0;" data-ab-test="hizmetler_hero_cta">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="mb-3">
+                <h1 class="mb-3" data-ab-variant="A">
                     <i class="fas fa-concierge-bell me-2"></i>
                     Hizmetlerimiz
                 </h1>
-                <p class="lead">
+                <p class="lead" data-ab-variant="A">
                     Size özel danışmanlık hizmetlerimiz ve dijital ürünlerimizle yanınızdayız
+                </p>
+                <p class="lead" data-ab-variant="B">
+                    Haklarınızı hızla öğrenin: uzman danışmanlık ve dijital rehber paketleriyle hemen başlayın
                 </p>
             </div>
         </div>
@@ -154,7 +157,7 @@ include 'includes/header.php';
                                     <a href="<?php echo SITE_URL; ?>/urun.php?slug=<?php echo escape($product['slug']); ?>" class="btn btn-outline-primary btn-sm">
                                         <i class="fas fa-eye me-2"></i>İncele
                                     </a>
-                                    <button onclick="addToCart(<?php echo $product['id']; ?>)" class="btn btn-success btn-sm">
+                                    <button onclick="addToCart(<?php echo $product['id']; ?>, '<?php echo escape(addslashes($product['name'])); ?>', '<?php echo (float)$product['price']; ?>')" class="btn btn-success btn-sm" data-cta="true">
                                         <i class="fas fa-shopping-cart me-2"></i>Satın Al
                                     </button>
                                 </div>
@@ -242,7 +245,7 @@ include 'includes/header.php';
 
 <script>
 // Sepete ekle fonksiyonu
-function addToCart(productId) {
+function addToCart(productId, productName, productPrice) {
     <?php if (!isset($_SESSION['user_id'])): ?>
         // Giriş yapmamış kullanıcılar için
         if (confirm('Satın alma işlemi için giriş yapmanız gerekmektedir. Giriş sayfasına yönlendirilmek ister misiniz?')) {
@@ -251,6 +254,22 @@ function addToCart(productId) {
         return;
     <?php endif; ?>
     
+
+    if (window.AnalyticsTracker && typeof window.AnalyticsTracker.trackAddToCart === 'function') {
+        window.AnalyticsTracker.trackAddToCart({
+            id: productId,
+            name: productName || 'Ürün',
+            price: productPrice || 0,
+            quantity: 1,
+            category: 'digital_product',
+            currency: 'TRY'
+        });
+
+        if (typeof window.AnalyticsTracker.trackABConversion === 'function') {
+            window.AnalyticsTracker.trackABConversion('hizmetler_hero_cta', 'add_to_cart_click', productPrice || 0);
+        }
+    }
+
     // AJAX ile sepete ekle
     fetch('<?php echo SITE_URL; ?>/cart-add.php', {
         method: 'POST',
