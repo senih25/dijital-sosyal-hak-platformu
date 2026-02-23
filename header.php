@@ -18,6 +18,7 @@
             <a href="#">Hak Rehberi</a>
             <a href="#">Hesaplama</a>
             <a href="#">İletişim</a>
+            <a href="/ileri-seviye-ozellikler.php">İleri Özellikler</a>
         </nav>
     </div>
 </header>
