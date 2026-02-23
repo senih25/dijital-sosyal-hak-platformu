@@ -519,3 +519,23 @@ Sosyal Hizmet Rehberlik platformunu kullandığınız için teşekkür ederiz!
 
 **Son Güncelleme:** 14 Aralık 2025
 **Versiyon:** 1.0.0
+
+## 📊 Veri Yönetimi ve Analitik (Yeni)
+
+Bu sürümle birlikte aşağıdaki modüller eklendi:
+
+- `data_management_schema.sql`: Kullanıcı profilleri, sağlık kayıtları, sosyal hak geçmişi, hesaplama sonuçları, günlük analitik ve yedekleme iş kayıtları için tablo şemaları.
+- `user_profile_system.php`: KVKK uyumlu profil/sağlık verisi saklama, hassas alan şifreleme (AES-256-CBC), hesaplama sonucu geçmişi tutma.
+- `admin_analytics.php`: Admin için kullanıcı, popüler hizmet, hesaplama trendi ve gelir skoru raporları (grafik + tablo).
+- `backup_manager.php` + `backup_cli.php`: Günlük/haftalık/aylık/manuel yedek alma, checksum, kayıt, geri yükleme ve bulut entegrasyon iskeleti.
+
+### Hızlı Kullanım
+
+1. SQL şemasını veritabanına import edin:
+   - `data_management_schema.sql`
+2. Zamanlanmış görev örnekleri:
+   - Günlük: `php backup_cli.php gunluk`
+   - Haftalık: `php backup_cli.php haftalik`
+   - Aylık: `php backup_cli.php aylik`
+3. Rapor sayfası:
+   - `admin_analytics.php`
