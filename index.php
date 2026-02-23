@@ -1,96 +1,136 @@
 <?php
 session_start();
-
-// Basit giriş kontrolü
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    // Basit doğrulama (güvenlik için daha sonra geliştirilecek)
-    if ($username === 'admin' && $password === 'dijital2026!') {
-        $_SESSION['admin_logged_in'] = true;
-        header('Location: dashboard.php');
-        exit;
-    } else {
-        $error = "Kullanıcı adı veya şifre hatalı!";
-    }
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dijital Sosyal Hak Rehberliği - Admin Panel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dijital Sosyal Hak Rehberliği</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+        :root {
+            --brand-primary: #1d4ed8;
+            --brand-secondary: #0ea5e9;
+            --soft-bg: #f8fafc;
         }
-        .login-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            padding: 2rem;
-            max-width: 400px;
-            width: 100%;
+        body { background: var(--soft-bg); }
+        .hero {
+            background: linear-gradient(135deg, rgba(29,78,216,.95), rgba(14,165,233,.9));
+            color: #fff;
+            padding: 6rem 0 5rem;
         }
-        .logo {
-            text-align: center;
-            margin-bottom: 2rem;
+        .card-elevated {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 8px 30px rgba(15,23,42,.08);
+            transition: transform .2s ease, box-shadow .2s ease;
         }
-        .logo h3 {
-            color: #667eea;
-            font-weight: bold;
+        .card-elevated:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 35px rgba(15,23,42,.12);
         }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            padding: 12px;
-            font-weight: bold;
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--brand-primary);
         }
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="login-card">
-                    <div class="logo">
-                        <h3>🏛️ Admin Panel</h3>
-                        <p class="text-muted">Dijital Sosyal Hak Rehberliği</p>
-                    </div>
-                    
-                    <?php if (isset($error)): ?>
-                        <div class="alert alert-danger"><?php echo $error; ?></div>
-                    <?php endif; ?>
-                    
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Kullanıcı Adı</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Şifre</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <button type="submit" name="login" class="btn btn-login text-white w-100">
-                            Giriş Yap
-                        </button>
-                    </form>
-                    
-                    <div class="mt-3 text-center">
-                        <small class="text-muted">
-                            Güvenli giriş sistemi - KVKK uyumlu
-                        </small>
+        <a class="navbar-brand fw-bold text-primary" href="index.php">
+            <i class="fa-solid fa-shield-heart me-2"></i>Dijital Sosyal Hak Rehberliği
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.php">Ana Sayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="hesaplama_araclari_calisir.php">Hesaplama Araçları</a></li>
+                <li class="nav-item"><a class="nav-link" href="sss.php">SSS</a></li>
+                <li class="nav-item"><a class="nav-link" href="iletisim.php">İletişim</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin.php">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7 text-center text-lg-start">
+                <span class="badge bg-light text-primary mb-3">2026 Mevzuatına Uyumlu</span>
+                <h1 class="display-5 fw-bold mb-3">Dijital Sosyal Hak Rehberliği ile haklarınıza güvenle ulaşın</h1>
+                <p class="lead mb-4">SGK süreçlerinden engellilik raporlarına, evde bakım maaşı başvurularından gelir testine kadar profesyonel ve anlaşılır rehberlik sunuyoruz.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
+                    <a href="hesaplama_araclari_calisir.php" class="btn btn-light btn-lg px-4"><i class="fa-solid fa-calculator me-2"></i>Hesaplama Araçlarını Aç</a>
+                    <a href="sss.php" class="btn btn-outline-light btn-lg px-4"><i class="fa-regular fa-circle-question me-2"></i>SSS'ye Git</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card card-elevated">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Hızlı Başvuru Yol Haritası</h5>
+                        <ol class="mb-0 text-muted">
+                            <li>Durumunuza uygun hak kategorisini belirleyin.</li>
+                            <li>Hesaplama araçlarıyla ön değerlendirme yapın.</li>
+                            <li>Gerekli belgeleri hazırlayın ve başvuruyu tamamlayın.</li>
+                        </ol>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Hizmetlerimiz</h2>
+            <p class="text-muted">Sosyal hak başvurularında uçtan uca danışmanlık.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-xl-3"><div class="card card-elevated h-100"><div class="card-body"><i class="fa-solid fa-building-columns text-primary fs-3"></i><h5 class="mt-3">SGK İşlemleri</h5><p class="text-muted mb-0">Emeklilik, prim gün hesapları ve resmi süreç danışmanlığı.</p></div></div></div>
+            <div class="col-md-6 col-xl-3"><div class="card card-elevated h-100"><div class="card-body"><i class="fa-solid fa-wheelchair text-primary fs-3"></i><h5 class="mt-3">Engelli Hakları</h5><p class="text-muted mb-0">Engelli raporu, ÇÖZGER ve bakım destekleri hakkında rehberlik.</p></div></div></div>
+            <div class="col-md-6 col-xl-3"><div class="card card-elevated h-100"><div class="card-body"><i class="fa-solid fa-file-circle-check text-primary fs-3"></i><h5 class="mt-3">Başvuru Hazırlığı</h5><p class="text-muted mb-0">Belge listeleri, başvuru dosyası kontrolü ve süreç takibi.</p></div></div></div>
+            <div class="col-md-6 col-xl-3"><div class="card card-elevated h-100"><div class="card-body"><i class="fa-solid fa-hand-holding-heart text-primary fs-3"></i><h5 class="mt-3">Sosyal Yardım Desteği</h5><p class="text-muted mb-0">Gelir testi, yardım uygunluğu ve kurum yönlendirmeleri.</p></div></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white border-top border-bottom">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-lg-3"><div class="stat-number">25.000+</div><div class="text-muted">Aylık Ziyaretçi</div></div>
+            <div class="col-6 col-lg-3"><div class="stat-number">4.800+</div><div class="text-muted">Tamamlanan Hesaplama</div></div>
+            <div class="col-6 col-lg-3"><div class="stat-number">%94</div><div class="text-muted">Memnuniyet Oranı</div></div>
+            <div class="col-6 col-lg-3"><div class="stat-number">81 İl</div><div class="text-muted">Türkiye Genelinde Erişim</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container text-center">
+        <h3 class="fw-bold">Haklarınızı ertelemeyin, bugün başlayın</h3>
+        <p class="text-muted">Güncel mevzuata göre hazırlanmış dijital rehberlik ve hesaplama araçları ile doğru adımı atın.</p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+            <a href="hesaplama_araclari_calisir.php" class="btn btn-primary btn-lg">Hemen Hesapla</a>
+            <a href="iletisim.php" class="btn btn-outline-primary btn-lg">Uzman Desteği Al</a>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <small>© 2026 Dijital Sosyal Hak Rehberliği</small>
+        <small class="text-secondary">Güvenilir • Erişilebilir • Mevzuata Uyumlu</small>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="ai-chatbot.js"></script>
 </body>
 </html>
