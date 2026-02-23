@@ -2,7 +2,16 @@
 require_once __DIR__ . '/security.php';
 SecurityManager::secureSessionStart();
 
-$userId = $_SESSION['user_id'] ?? 1;
+if (empty($_SESSION['admin_logged_in']) || empty($_SESSION['user_id'])) {
+    SecurityLogger::logSecurityEvent('unauthorized_kvkk_access_attempt', [
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+        'request_method' => $_SERVER['REQUEST_METHOD'] ?? 'GET'
+    ], 'high');
+    header('Location: index.php');
+    exit;
+}
+
+$userId = (int) $_SESSION['user_id'];
 $message = null;
 $error = null;
 

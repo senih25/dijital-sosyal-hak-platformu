@@ -42,9 +42,9 @@ if (isset($_POST['send_2fa']) && isset($_SESSION['pending_2fa_user'])) {
         ? $_SESSION['pending_2fa_user']['phone']
         : $_SESSION['pending_2fa_user']['email'];
 
-    $code = TwoFactorAuthManager::sendCode($_SESSION['pending_2fa_user']['id'], $destination, $method);
+    TwoFactorAuthManager::sendCode($_SESSION['pending_2fa_user']['id'], $destination, $method);
     $maskedDestination = SecurityManager::maskPersonalData($destination, $method === 'sms' ? 'phone' : 'email');
-    $info = "{$maskedDestination} adresine doğrulama kodu gönderildi. Demo kod: {$code}";
+    $info = "{$maskedDestination} adresine doğrulama kodu gönderildi. Lütfen doğrulama kodunu ilgili kanaldan kontrol edin.";
     $show2FA = true;
 }
 
