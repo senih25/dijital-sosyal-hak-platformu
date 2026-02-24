@@ -364,3 +364,166 @@ if (scrollToTopBtn) {
         });
     });
 }
+
+// ========== PWA + Erişilebilirlik + Çok Dilli Destek ==========
+const translations = {
+    tr: {
+        skip_to_content: 'Ana içeriğe geç',
+        site_title: 'Dijital Sosyal Hak Platformu',
+        nav_home: 'Ana Sayfa',
+        nav_services: 'Hizmetler',
+        nav_guide: 'Hak Rehberi',
+        nav_calculation: 'Hesaplama',
+        nav_contact: 'İletişim',
+        large_font: 'Büyük Font',
+        high_contrast: 'Yüksek Kontrast',
+        read_aloud: 'Sesli Oku',
+        install_app: 'Uygulamayı Yükle',
+        enable_notifications: 'Bildirimleri Aç',
+        notifications_enabled: 'Bildirimler etkinleştirildi.'
+    },
+    ku: {
+        skip_to_content: 'Biçe bo naveroka sereke',
+        site_title: 'Platforma Mafên Civakî ya Dîjîtal',
+        nav_home: 'Rûpela Sereke',
+        nav_services: 'Xizmet',
+        nav_guide: 'Rêberiya Mafan',
+        nav_calculation: 'Hesabkirin',
+        nav_contact: 'Têkilî',
+        large_font: 'Nivîsa Mezin',
+        high_contrast: 'Kontrasta Bilind',
+        read_aloud: 'Bi Dengê Bixwîne',
+        install_app: 'Sepanê Daxe',
+        enable_notifications: 'Agahdariyan Veke',
+        notifications_enabled: 'Agahdarî hatin çalak kirin.'
+    },
+    ar: {
+        skip_to_content: 'الانتقال إلى المحتوى الرئيسي',
+        site_title: 'منصة الحقوق الاجتماعية الرقمية',
+        nav_home: 'الصفحة الرئيسية',
+        nav_services: 'الخدمات',
+        nav_guide: 'دليل الحقوق',
+        nav_calculation: 'الحاسبات',
+        nav_contact: 'اتصال',
+        large_font: 'خط كبير',
+        high_contrast: 'تباين عالٍ',
+        read_aloud: 'قراءة صوتية',
+        install_app: 'تثبيت التطبيق',
+        enable_notifications: 'تفعيل الإشعارات',
+        notifications_enabled: 'تم تفعيل الإشعارات.'
+    }
+};
+
+function applyLanguage(lang) {
+    const selected = translations[lang] ? lang : 'tr';
+    document.documentElement.lang = selected;
+    document.documentElement.dir = selected === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('preferredLanguage', selected);
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (translations[selected][key]) {
+            el.textContent = translations[selected][key];
+        }
+    });
+}
+
+function toggleClassWithState(buttonId, className, storageKey) {
+    const button = document.getElementById(buttonId);
+    if (!button) return;
+
+    const saved = localStorage.getItem(storageKey) === 'true';
+    if (saved) {
+        document.body.classList.add(className);
+        button.setAttribute('aria-pressed', 'true');
+    }
+
+    button.addEventListener('click', () => {
+        const isActive = document.body.classList.toggle(className);
+        localStorage.setItem(storageKey, String(isActive));
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+}
+
+function setupReadAloud() {
+    const btn = document.getElementById('read-aloud-toggle');
+    if (!btn || !('speechSynthesis' in window)) return;
+
+    btn.addEventListener('click', () => {
+        const isSpeaking = speechSynthesis.speaking;
+        if (isSpeaking) {
+            speechSynthesis.cancel();
+            btn.setAttribute('aria-pressed', 'false');
+            return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(document.body.innerText.slice(0, 2500));
+        utterance.lang = document.documentElement.lang || 'tr-TR';
+        speechSynthesis.speak(utterance);
+        btn.setAttribute('aria-pressed', 'true');
+        utterance.onend = () => btn.setAttribute('aria-pressed', 'false');
+    });
+}
+
+async function setupPWA() {
+    if ('serviceWorker' in navigator) {
+        try {
+            await navigator.serviceWorker.register('/sw.js');
+        } catch (err) {
+            console.warn('Service worker kayıt hatası:', err);
+        }
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-pwa');
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        if (installBtn) installBtn.hidden = false;
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            installBtn.hidden = true;
+        });
+    }
+}
+
+function setupNotifications() {
+    const btn = document.getElementById('enable-notifications');
+    if (!btn || !('Notification' in window)) return;
+
+    btn.addEventListener('click', async () => {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            const lang = localStorage.getItem('preferredLanguage') || 'tr';
+            if (navigator.serviceWorker?.controller) {
+                navigator.serviceWorker.controller.postMessage({ type: 'LOCAL_NOTIFY', lang });
+            } else {
+                new Notification(translations[lang].notifications_enabled);
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const languageSwitcher = document.getElementById('language-switcher');
+    const preferredLanguage = localStorage.getItem('preferredLanguage') || 'tr';
+
+    if (languageSwitcher) {
+        languageSwitcher.value = preferredLanguage;
+        languageSwitcher.addEventListener('change', (e) => applyLanguage(e.target.value));
+    }
+
+    applyLanguage(preferredLanguage);
+    toggleClassWithState('font-toggle', 'large-font', 'largeFontEnabled');
+    toggleClassWithState('contrast-toggle', 'high-contrast', 'highContrastEnabled');
+    setupReadAloud();
+    setupNotifications();
+    setupPWA();
+});
