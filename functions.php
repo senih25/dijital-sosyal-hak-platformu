@@ -219,4 +219,158 @@ function sendEmail($to, $subject, $message) {
 function generateOrderNumber() {
     return 'SHR' . date('Ymd') . rand(1000, 9999);
 }
+
+// E-ticaret ödeme sağlayıcıları
+function getPaymentProviders() {
+    return [
+        'iyzico' => [
+            'name' => 'İyzico',
+            'commission_rate' => 0.029,
+            'fixed_fee' => 0.25,
+            'currency' => 'TRY'
+        ],
+        'paytr' => [
+            'name' => 'PayTR',
+            'commission_rate' => 0.027,
+            'fixed_fee' => 0.35,
+            'currency' => 'TRY'
+        ]
+    ];
+}
+
+// Ödeme özeti hesapla (demo simülasyon)
+function calculatePaymentBreakdown($amount, $providerKey) {
+    $providers = getPaymentProviders();
+
+    if (!isset($providers[$providerKey])) {
+        return null;
+    }
+
+    $provider = $providers[$providerKey];
+    $commission = ($amount * $provider['commission_rate']) + $provider['fixed_fee'];
+    $netAmount = $amount - $commission;
+
+    return [
+        'provider' => $provider['name'],
+        'gross_amount' => $amount,
+        'commission' => max($commission, 0),
+        'net_amount' => max($netAmount, 0),
+        'currency' => $provider['currency']
+    ];
+}
+
+// Fatura oluştur (demo)
+function createInvoiceRecord($customerName, $orderNumber, $items, $taxRate = 0.20) {
+    $subtotal = 0;
+    foreach ($items as $item) {
+        $subtotal += ($item['quantity'] * $item['unit_price']);
+    }
+
+    $taxAmount = $subtotal * $taxRate;
+    $total = $subtotal + $taxAmount;
+
+    return [
+        'invoice_no' => 'FAT-' . date('Ymd') . '-' . rand(10000, 99999),
+        'customer_name' => $customerName,
+        'order_number' => $orderNumber,
+        'items' => $items,
+        'subtotal' => $subtotal,
+        'tax_rate' => $taxRate,
+        'tax_amount' => $taxAmount,
+        'total' => $total,
+        'issued_at' => date('Y-m-d H:i:s')
+    ];
+}
+
+// Kargo akışı
+function getCargoTimeline($trackingNumber) {
+    return [
+        ['status' => 'Sipariş Alındı', 'time' => date('Y-m-d H:i', strtotime('-2 days'))],
+        ['status' => 'Kargoya Verildi', 'time' => date('Y-m-d H:i', strtotime('-1 day'))],
+        ['status' => 'Transfer Merkezinde', 'time' => date('Y-m-d H:i', strtotime('-8 hours'))],
+        ['status' => 'Dağıtıma Çıktı', 'time' => date('Y-m-d H:i', strtotime('-2 hours'))],
+        ['status' => 'Takip No', 'time' => $trackingNumber]
+    ];
+}
+
+// İade/değişim uygunluk kontrolü
+function evaluateReturnRequest($deliveredAt, $requestType = 'return', $maxDays = 14) {
+    $deliveredTime = strtotime($deliveredAt);
+    $diffDays = floor((time() - $deliveredTime) / 86400);
+    $isEligible = $diffDays <= $maxDays;
+
+    return [
+        'type' => $requestType,
+        'days_passed' => $diffDays,
+        'max_days' => $maxDays,
+        'eligible' => $isEligible,
+        'next_step' => $isEligible ? 'Müşteri hizmetleri onayı bekleniyor' : 'Süre aşıldığı için manuel inceleme gerekli'
+    ];
+}
+
+// Abonelik paketleri
+function getSubscriptionPlans() {
+    return [
+        'premium_monthly' => [
+            'title' => 'Premium Aylık',
+            'price' => 799,
+            'period' => 'monthly',
+            'level' => 'Premium'
+        ],
+        'premium_yearly' => [
+            'title' => 'Premium Yıllık',
+            'price' => 7990,
+            'period' => 'yearly',
+            'level' => 'Premium+'
+        ]
+    ];
+}
+
+function simulateSubscription($planKey, $startedAt = null) {
+    $plans = getSubscriptionPlans();
+    if (!isset($plans[$planKey])) {
+        return null;
+    }
+
+    $startedAt = $startedAt ?: date('Y-m-d');
+    $periodText = $plans[$planKey]['period'] === 'monthly' ? '+1 month' : '+1 year';
+
+    return [
+        'plan' => $plans[$planKey],
+        'started_at' => $startedAt,
+        'next_payment_date' => date('Y-m-d', strtotime($periodText, strtotime($startedAt))),
+        'auto_renewal' => true,
+        'exclusive_contents' => [
+            'Canlı uzman webinarları',
+            'Üyeye özel rehber şablonları',
+            'Öncelikli danışmanlık hattı'
+        ]
+    ];
+}
+
+// Referans sistemi
+function generateReferralCode($prefix = 'DSH') {
+    return $prefix . strtoupper(substr(md5(uniqid('', true)), 0, 7));
+}
+
+function calculateReferralCommission($saleAmount, $rate = 0.10) {
+    return [
+        'sale_amount' => $saleAmount,
+        'rate' => $rate,
+        'commission' => $saleAmount * $rate
+    ];
+}
+
+function calculateReferralRewardLevel($totalCommission) {
+    if ($totalCommission >= 5000) {
+        return 'Platin Elçi';
+    }
+    if ($totalCommission >= 2000) {
+        return 'Altın Elçi';
+    }
+    if ($totalCommission >= 750) {
+        return 'Gümüş Elçi';
+    }
+    return 'Başlangıç';
+}
 ?>
