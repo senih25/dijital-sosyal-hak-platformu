@@ -1,28 +1,26 @@
-# Dockerfile
+# Use a minimal base image
+FROM python:3.9-alpine
 
-# Use PHP 8.1 as the base image
-FROM php:8.1-cli
+# Set a non-root user
+RUN addgroup -S myusergroup && adduser -S myuser -G myusergroup
+USER myuser
 
 # Set the working directory
 WORKDIR /app
 
-# Install dependencies required for Composer
-RUN apt-get update && \
-    apt-get install -y libzip-dev unzip && \
-    docker-php-ext-install zip
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install dependencies (include verification if applicable)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY . .
+COPY --chown=myuser:myuser . .
 
-# Install application dependencies using Composer
-RUN composer install
+# Define security headers if applicable
+# (This part depends on the application framework)
+# Example for Flask: 
+# from flask import Flask
+# app = Flask(__name__)
+# app.config['HTTP_X_CONTENT_TYPE_OPTIONS'] = 'nosniff'
 
-# DevCycle SDK Configuration for Development Environment
-ENV DEVCYCLE_ENV=development
-ENV DEVCYCLE_SDK_KEY=your_devcycle_sdk_key
-
-# Command to run the application (if applicable)
-CMD ["php", "your_script.php"]
+# Start the application
+CMD ["python", "app.py"]
