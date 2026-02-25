@@ -1,16 +1,23 @@
 <?php
 
 class DevCycleManager {
+    private $projectKey;
+    private $sdkKey;
     private $sdk;
 
-    public function __construct() {
-        // Initialize the DevCycle SDK
+    public function __construct($projectKey, $sdkKey) {
+        $this->projectKey = $projectKey;
+        $this->sdkKey = $sdkKey;
+        $this->initializeSDK();
+    }
+
+    private function initializeSDK() {
+        // Assume DevCycle SDK is included and initialized
         try {
-            // Assuming DevCycle SDK is available through autoload or manual include
-            $this->sdk = new DevCycleSDK(); // Replace with actual SDK initialization
+            $this->sdk = new DevCycleSDK($this->projectKey, $this->sdkKey);
         } catch (Exception $e) {
-            error_log('Error initializing DevCycle SDK: ' . $e->getMessage());
-            throw new Exception('Failed to initialize the DevCycle SDK.');
+            error_log('SDK initialization failed: ' . $e->getMessage());
+            throw new Exception('Failed to initialize SDK.');
         }
     }
 
@@ -18,19 +25,25 @@ class DevCycleManager {
         try {
             return $this->sdk->isFeatureEnabled($featureKey, $user);
         } catch (Exception $e) {
-            error_log('Error checking feature status: ' . $e->getMessage());
-            return false; // Default to false on error
+            error_log('Error in checking feature: ' . $e->getMessage());
+            return false;
         }
     }
 
-    public function getVariant($featureKey, $user) {
+    public function getVariation($featureKey, $user) {
         try {
-            return $this->sdk->getVariant($featureKey, $user);
+            return $this->sdk->getVariation($featureKey, $user);
         } catch (Exception $e) {
-            error_log('Error getting feature variant: ' . $e->getMessage());
-            return null; // Default to null on error
+            error_log('Error in getting variation: ' . $e->getMessage());
+            return null;
         }
     }
-}
 
-?>
+    public function trackEvent($eventName, $user) {
+        try {
+            $this->sdk->trackEvent($eventName, $user);
+        } catch (Exception $e) {
+            error_log('Error in tracking event: ' . $e->getMessage());
+        }
+    }
+} 
