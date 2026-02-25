@@ -1,0 +1,56 @@
+name: Datadog Monitoring Check
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  schedule:
+    # Run every hour to verify monitoring is healthy
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  verify-monitoring:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Validate Datadog configuration
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
+          DD_SERVICE: dijital-sosyal-hak-platformu
+          DD_ENV: production
+        run: |
+          php -r "
+          require 'config/datadog.php';
+          \$dd = DatadogConfig::getInstance();
+          if (!\$dd->isEnabled()) {
+            fwrite(STDERR, 'Datadog is disabled – DD_API_KEY may be missing.' . PHP_EOL);
+            exit(1);
+          }
+          echo 'Datadog config OK. Service: ' . \$dd->getService() . PHP_EOL;
+          "
+
+      - name: Send deployment metric to Datadog
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
+          DD_SERVICE: dijital-sosyal-hak-platformu
+          DD_ENV: production
+          DD_VERSION: ${{ github.sha }}
+        run: |
+          php -r "
+          require 'config/datadog.php';
+          \$dd = DatadogConfig::getInstance();
+          \$ok = \$dd->sendMetric('app.deployment', 1, ['branch' => getenv('GITHUB_REF_NAME') ?: 'unknown']);
+          echo \$ok ? 'Deployment metric sent.' . PHP_EOL : 'Metric send skipped (no key).' . PHP_EOL;
+          "

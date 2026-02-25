@@ -1,0 +1,14 @@
+{
+  "nav.home": "Anasayfa",
+  "nav.services": "Hizmetler",
+  "nav.calculators": "Hesaplama Araçları",
+  "nav.faq": "Sık Sorulan Sorular",
+  "nav.contact": "İletişim",
+  "welcome": "Dijital Sosyal Hak Platformuna Hoş Geldiniz",
+  "language": "Dil",
+  "btn.submit": "Gönder",
+  "btn.calculate": "Hesapla",
+  "btn.cancel": "İptal",
+  "error.required": ":field alanı zorunludur.",
+  "error.generic": "Bir hata oluştu. Lütfen tekrar deneyin."
+}

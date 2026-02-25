@@ -1,6 +1,9 @@
 config.php
 .env
+.env.local
+.env.*.local
 uploads/
 vendor/
+node_modules/
 *.log
 *.sql
