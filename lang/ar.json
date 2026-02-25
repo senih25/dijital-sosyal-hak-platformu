@@ -1,0 +1,14 @@
+{
+  "nav.home": "الرئيسية",
+  "nav.services": "الخدمات",
+  "nav.calculators": "الحاسبات",
+  "nav.faq": "الأسئلة الشائعة",
+  "nav.contact": "اتصل بنا",
+  "welcome": "مرحباً بك في منصة الحقوق الاجتماعية الرقمية",
+  "language": "اللغة",
+  "btn.submit": "إرسال",
+  "btn.calculate": "احسب",
+  "btn.cancel": "إلغاء",
+  "error.required": "حقل :field مطلوب.",
+  "error.generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+}

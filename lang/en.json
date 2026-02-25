@@ -1,0 +1,14 @@
+{
+  "nav.home": "Home",
+  "nav.services": "Services",
+  "nav.calculators": "Calculators",
+  "nav.faq": "FAQ",
+  "nav.contact": "Contact",
+  "welcome": "Welcome to the Digital Social Rights Platform",
+  "language": "Language",
+  "btn.submit": "Submit",
+  "btn.calculate": "Calculate",
+  "btn.cancel": "Cancel",
+  "error.required": "The :field field is required.",
+  "error.generic": "An error occurred. Please try again."
+}
