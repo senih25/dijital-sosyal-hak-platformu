@@ -1,7 +1,21 @@
-.env
-vendor/
+# .gitignore
+
+# Node modules
 node_modules/
-.DS_Store
-composer.lock
-docker-volumes/
+
+# Logs
 logs/
+*.log
+
+# Dependency directories
+jspm_packages/ 
+
+# Ignore environment files
+.env
+
+# Ignore Unix line endings
+* text=auto
+*.php text
+*.html text
+*.js text
+*.css text
