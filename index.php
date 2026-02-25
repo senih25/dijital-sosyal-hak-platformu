@@ -1,5 +1,28 @@
 <?php
 session_start();
+
+// DevCycle feature flags integration
+$devcycleEnabled = false;
+$showNewDashboard = false;
+$dashboardVariant = null;
+
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+if (file_exists(__DIR__ . '/config/devcycle.php')) {
+    require_once __DIR__ . '/config/devcycle.php';
+    try {
+        $devcycle = new DevCycleManager();
+        $userId = $_SESSION['user_id'] ?? 'anonymous';
+        $userEmail = $_SESSION['user_email'] ?? '';
+
+        $showNewDashboard = $devcycle->isFeatureEnabled($userId, 'new-dashboard');
+        $dashboardVariant = $devcycle->getVariant($userId, 'dashboard-redesign');
+        $devcycleEnabled = true;
+    } catch (\Exception $e) {
+        error_log('DevCycle unavailable: ' . $e->getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -64,8 +87,16 @@ session_start();
         <div class="row align-items-center g-4">
             <div class="col-lg-7 text-center text-lg-start">
                 <span class="badge bg-light text-primary mb-3">2026 Mevzuatına Uyumlu</span>
+                <?php if ($showNewDashboard): ?>
+                <h1 class="display-5 fw-bold mb-3">Yeni Dijital Gösterge Paneli ile haklarınızı takip edin</h1>
+                <p class="lead mb-4">Kişiselleştirilmiş gösterge panelinizle SGK süreçlerini, engellilik haklarını ve sosyal yardım başvurularını tek ekrandan yönetin.</p>
+                <?php elseif ($dashboardVariant === 'variation-a'): ?>
+                <h1 class="display-5 fw-bold mb-3">Haklarınıza hızla ulaşın – Yenilenmiş Arayüz</h1>
+                <p class="lead mb-4">SGK süreçlerinden engellilik raporlarına, evde bakım maaşı başvurularından gelir testine kadar profesyonel ve anlaşılır rehberlik sunuyoruz.</p>
+                <?php else: ?>
                 <h1 class="display-5 fw-bold mb-3">Dijital Sosyal Hak Rehberliği ile haklarınıza güvenle ulaşın</h1>
                 <p class="lead mb-4">SGK süreçlerinden engellilik raporlarına, evde bakım maaşı başvurularından gelir testine kadar profesyonel ve anlaşılır rehberlik sunuyoruz.</p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
                     <a href="hesaplama_araclari_calisir.php" class="btn btn-light btn-lg px-4"><i class="fa-solid fa-calculator me-2"></i>Hesaplama Araçlarını Aç</a>
                     <a href="sss.php" class="btn btn-outline-light btn-lg px-4"><i class="fa-regular fa-circle-question me-2"></i>SSS'ye Git</a>
