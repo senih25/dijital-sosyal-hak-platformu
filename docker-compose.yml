@@ -1,1 +1,25 @@
-version: '3.8'\n\nservices:\n  php:\n    image: php:8.1-fpm\n    volumes:\n      - .:/var/www/html\n    networks:\n      - app-network\n\n  db:\n    image: mysql:5.7\n    restart: always\n    environment:\n      MYSQL_DATABASE: devcycle_db\n      MYSQL_USER: devcycle_user\n      MYSQL_PASSWORD: devcycle_pass\n      MYSQL_ROOT_PASSWORD: root_pass\n    volumes:\n      - db_data:/var/lib/mysql\n    networks:\n      - app-network\n\nnetworks:\n  app-network:\n    driver: bridge\n\nvolumes:\n  db_data:
+version: '3.8'  
+services:  
+  web:  
+    image: your_image_name  
+    ports:  
+      - '80:80'  
+    networks:  
+      - isolated_network  
+    healthcheck:  
+      test: ['CMD', 'curl', '-f', 'http://localhost/']  
+      interval: 1m30s  
+      timeout: 10s  
+      retries: 3  
+    deploy:  
+      resources:  
+        limits:  
+          cpus: '0.5'  
+          memory: 512M  
+    read_only: true  
+    environment:  
+      - SECURE_VAR=${SECURE_VAR}  
+
+networks:  
+  isolated_network:  
+    driver: bridge  
