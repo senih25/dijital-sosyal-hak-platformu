@@ -507,6 +507,33 @@ Sorularınız için:
 
 ---
 
+## 🔌 Entegrasyonlar (Integrations)
+
+| Entegrasyon | Açıklama | Yapılandırma |
+|---|---|---|
+| **Doppler** | Gizli değer yönetimi | `config/doppler.php` · `docs/DOPPLER_SETUP.md` |
+| **POEditor** | Çok dilli destek (TR / EN / AR) | `config/localization.php` · `docs/POEDITOR_SETUP.md` |
+| **Datadog** | İsteğe bağlı APM izleme | `config/datadog.php` · `includes/monitoring.php` |
+| **DevCycle** | Özellik bayrakları | `config/devcycle.php` · `docs/DEVCYCLE_SETUP.md` |
+
+### Hızlı başlangıç
+
+```bash
+# Ortam değişkenlerini ayarlayın
+cp .env.example .env
+# .env dosyasını kendi değerlerinizle doldurun
+
+# Bağımlılıkları yükleyin
+composer install
+
+# Yerel sunucuyu başlatın
+php -S localhost:8080
+```
+
+> Üretim ortamında gizli değerleri `.env` yerine [Doppler](https://doppler.com) üzerinden yönetmeniz önerilir.
+
+---
+
 ## 📄 Lisans
 
 Bu proje özel bir proje olup, tüm hakları saklıdır.
