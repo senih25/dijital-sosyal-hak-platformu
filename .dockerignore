@@ -1,0 +1,16 @@
+# Ignore the .git directory
+.git/
+
+# Ignore the Dockerfile if building from the context directory
+Dockerfile
+
+# Ignore any build artifacts
+build/
+
+# Ignore the node_modules directory if using Node.js
+node_modules/
+
+# Ignore temporary files
+*.tmp
+*.log
+*~
