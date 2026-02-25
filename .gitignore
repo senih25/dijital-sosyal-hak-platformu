@@ -1,6 +1,7 @@
-config.php
 .env
-uploads/
 vendor/
-*.log
-*.sql
+node_modules/
+.DS_Store
+composer.lock
+docker-volumes/
+logs/
