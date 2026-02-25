@@ -106,16 +106,14 @@ The language is resolved in this priority order:
 
 ---
 
-## 7. GitHub Actions – Automated Sync
+## 7. Manual Workflow (Recommended)
 
-Add two repository secrets:
+Automated sync is not required. The recommended workflow is:
 
-| Secret name          | Description                  |
-|----------------------|------------------------------|
-| `POEDITOR_API_TOKEN` | Your POEditor API token      |
-| `POEDITOR_PROJECT_ID`| Your POEditor project ID     |
-
-The workflow `.github/workflows/poeditor-sync.yml` pulls the latest translations daily at 06:00 UTC and commits any changes back to the repository.
+1. Import `lang/tr.json` into POEditor as the source language.
+2. Translate strings for `en` and `ar` inside POEditor.
+3. Export each language as **Key-Value JSON** and save the files as `lang/en.json` and `lang/ar.json`.
+4. Commit the updated files to the repository.
 
 ---
 

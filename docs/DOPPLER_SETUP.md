@@ -113,17 +113,13 @@ DopplerConfig::getInstance()->validateRequired([
 
 ---
 
-## 6. GitHub Actions
+## 6. Deployment
 
-Add a Doppler service token as a repository secret named `DOPPLER_TOKEN`:
-
-1. In the Doppler dashboard, go to your project → **Access** → **Service Tokens**.
-2. Create a token with **read** access to the `prd` config.
-3. In GitHub: **Settings → Secrets and variables → Actions → New repository secret**.
-   - Name: `DOPPLER_TOKEN`
-   - Value: the service token from step 2.
-
-The workflow `.github/workflows/doppler-secrets.yml` will verify all secrets are present on every push to `main` / `master`.
+Secrets are loaded via the Doppler CLI at deployment time. The deploy workflow
+(`.github/workflows/deploy.yml`) runs `composer install` and validates the
+configuration on every push to `main` / `master`. No separate Doppler workflow
+is needed – simply ensure your server environment has the secrets injected by
+`doppler run -- <web-server-command>`.
 
 ---
 
