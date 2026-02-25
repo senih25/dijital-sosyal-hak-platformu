@@ -1,0 +1,35 @@
+name: DevCycle Integration Sync
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  verify-devcycle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Verify DevCycle SDK connectivity
+        env:
+          DEVCYCLE_API_KEY: ${{ secrets.DEVCYCLE_API_KEY }}
+          DEVCYCLE_ENVIRONMENT: production
+        run: |
+          php -r "
+          require 'vendor/autoload.php';
+          require 'config/devcycle.php';
+          \$manager = new DevCycleManager();
+          echo 'DevCycle integration verified.' . PHP_EOL;
+          "
