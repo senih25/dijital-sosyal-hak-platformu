@@ -1,0 +1,7 @@
+project:
+  name: "my-project"
+  description: "This is a sample project"
+
+config:
+  environment: "development"
+  api_key: "your_api_key_here"
