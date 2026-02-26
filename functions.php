@@ -122,14 +122,18 @@ function uploadFile($file, $directory = 'uploads/') {
 // Site ayarı al
 function getSetting($pdo, $key, $default = '') {
     static $settings = [];
-    
+
+    if (!$pdo instanceof PDO) {
+        return $default;
+    }
+
     if (empty($settings)) {
         $stmt = $pdo->query("SELECT setting_key, setting_value FROM settings");
         while ($row = $stmt->fetch()) {
             $settings[$row['setting_key']] = $row['setting_value'];
         }
     }
-    
+
     return $settings[$key] ?? $default;
 }
 

@@ -1,45 +1,43 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../app/config.php';
-require_once __DIR__ . '/../app/lib/params.php';
-require_once __DIR__ . '/../app/lib/calculators.php';
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/app/services/IncomeCalculatorService.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
+$requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+if ($requestMethod !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['ok' => false, 'error' => 'Geçersiz istek metodu.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 try {
+    $csrfToken = (string) ($_POST['csrf_token'] ?? '');
+    if ($csrfToken !== '' && !verifyCSRFToken($csrfToken)) {
+        throw new RuntimeException('CSRF doğrulaması başarısız.');
+    }
 
-    $haneGeliri = isset($_POST['hane_geliri'])
-        ? (float)$_POST['hane_geliri']
-        : 0;
+    $haneGeliri = filter_input(INPUT_POST, 'hane_geliri', FILTER_VALIDATE_FLOAT);
+    $uyeSayisi = filter_input(INPUT_POST, 'uye_sayisi', FILTER_VALIDATE_INT);
 
-    $uyeSayisi = isset($_POST['uye_sayisi'])
-        ? (int)$_POST['uye_sayisi']
-        : 0;
+    if ($haneGeliri === false || $haneGeliri === null || $uyeSayisi === false || $uyeSayisi === null) {
+        throw new InvalidArgumentException('Geçersiz giriş verisi gönderildi.');
+    }
 
-    $yil = (int)date('Y');
-
-    $netAsgari = get_param($pdo, $yil, 'net_asgari_ucret');
-    $esikOrani = get_param($pdo, $yil, 'evde_bakim_esik_orani');
-
-    $result = calc_hane_gelir_testi(
-        $haneGeliri,
-        $uyeSayisi,
-        $netAsgari,
-        $esikOrani
-    );
+    $service = new IncomeCalculatorService();
+    $result = $service->calculateHouseholdIncomeTest((float) $haneGeliri, (int) $uyeSayisi);
 
     echo json_encode([
         'ok' => true,
-        'result' => $result
+        'result' => $result,
     ], JSON_UNESCAPED_UNICODE);
-
-} catch (Throwable $e) {
-
+} catch (Throwable $exception) {
     http_response_code(400);
 
     echo json_encode([
         'ok' => false,
-        'error' => $e->getMessage()
+        'error' => $exception->getMessage(),
     ], JSON_UNESCAPED_UNICODE);
 }
