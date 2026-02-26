@@ -99,3 +99,60 @@ CREATE TABLE IF NOT EXISTS backup_jobs (
     INDEX idx_backup_status (status),
     INDEX idx_backup_started (started_at)
 );
+
+-- ─── KVKK UYUM TABLOLARI ────────────────────────────────────────────────────
+
+-- Denetim Kaydı (immutable: satır silme/güncelleme trigger ile korunabilir)
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id         INT NULL,
+    action          VARCHAR(120)  NOT NULL,
+    details         TEXT          NULL,
+    ip_address      VARCHAR(45)   NOT NULL DEFAULT '',
+    user_agent      VARCHAR(500)  NOT NULL DEFAULT '',
+    result          ENUM('success','failure') NOT NULL DEFAULT 'success',
+    encrypted_fields TEXT         NULL,
+    created_at      DATETIME      NOT NULL,
+    INDEX idx_audit_user   (user_id),
+    INDEX idx_audit_action (action),
+    INDEX idx_audit_ts     (created_at)
+);
+
+-- Şifreleme Anahtarları (anahtar rotasyonu)
+CREATE TABLE IF NOT EXISTS encryption_keys (
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    algorithm    VARCHAR(50)  NOT NULL DEFAULT 'aes-256-cbc',
+    key_material VARCHAR(255) NOT NULL,
+    status       ENUM('active','rotated','revoked') NOT NULL DEFAULT 'active',
+    created_at   DATETIME     NOT NULL,
+    rotated_at   DATETIME     NULL,
+    INDEX idx_enckey_status (status)
+);
+
+-- Rıza Kayıtları (KVKK Md. 3/5)
+CREATE TABLE IF NOT EXISTS consent_records (
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id      INT          NOT NULL,
+    consent_type ENUM('essential','analytics','marketing') NOT NULL,
+    given_at     DATETIME     NOT NULL,
+    revoked_at   DATETIME     NULL,
+    ip_address   VARCHAR(45)  NOT NULL DEFAULT '',
+    user_agent   VARCHAR(500) NOT NULL DEFAULT '',
+    INDEX idx_consent_user   (user_id),
+    INDEX idx_consent_type   (consent_type),
+    INDEX idx_consent_given  (given_at)
+);
+
+-- Veri Silme Talepleri (KVKK Md. 7/11)
+CREATE TABLE IF NOT EXISTS deletion_requests (
+    id                BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id           INT          NOT NULL,
+    reason            TEXT         NULL,
+    request_date      DATETIME     NOT NULL,
+    processed_date    DATETIME     NULL,
+    status            ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+    verification_hash VARCHAR(64)  NOT NULL,
+    INDEX idx_del_user   (user_id),
+    INDEX idx_del_status (status),
+    INDEX idx_del_date   (request_date)
+);
