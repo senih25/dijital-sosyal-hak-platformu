@@ -1,568 +1,485 @@
-# 🏥 Sosyal Hizmet Rehberlik & Danışmanlık# Sosyal Hizmet Rehberlik & Danışmanlık Web Sitesi
+# 🌍 Dijital Sosyal Hak Platformu
+### *Digital Social Rights Platform*
 
+<div align="center">
 
+**🇹🇷 Türkçe** | **🇬🇧 English**
 
-Türkiye'de yaşayan bireylere sosyal haklar, engelli hakları, gelir testleri ve danışmanlık hizmetleri sunan kapsamlı bir web platformu.## 🚀 Kurulum Talimatları
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PHP](https://img.shields.io/badge/PHP-7.4%2B-blue)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-5.7%2B-orange)](https://mysql.com)
+[![KVKK](https://img.shields.io/badge/KVKK-Uyumlu-green)](https://kvkk.gov.tr)
+[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red)](https://github.com/senih25/dijital-sosyal-hak-platformu)
 
+> **"Sosyal haklar bir lütuf değil, her bireyin doğuştan hakkıdır."**
+> *"Social rights are not a privilege — they are a birthright."*
 
-
----### Gereksinimler
-
-- **XAMPP** (PHP 7.4+ ve MySQL 5.7+)
-
-## 📋 İçindekiler- Web tarayıcısı
-
-- Metin editörü (Visual Studio Code önerilir)
-
-- [Özellikler](#-özellikler)
-
-- [Teknolojiler](#-teknolojiler)### Adım 1: XAMPP Kurulumu
-
-- [Kurulum](#-kurulum)1. XAMPP'i indirin ve kurun: https://www.apachefriends.org/
-
-- [Veritabanı Yapılandırması](#-veritabanı-yapılandırması)2. XAMPP Control Panel'i açın
-
-- [Kullanım](#-kullanım)3. **Apache** ve **MySQL** servislerini başlatın
-
-- [E-posta Yapılandırması](#-e-posta-yapılandırması)
-
-- [Giriş Bilgileri](#-giriş-bilgileri)### Adım 2: Projeyi Yerleştirme
-
-- [Önemli Notlar](#-önemli-notlar)1. Bu projeyi `C:\xampp\htdocs\` klasörüne kopyalayın
-
-2. Proje yolu: `C:\xampp\htdocs\sosyal-hizmet-rehberlik\`
+</div>
 
 ---
 
-### Adım 3: Veritabanı Oluşturma
+## 🎯 Misyon & Vizyon / Mission & Vision
 
-## ✨ Özellikler1. Tarayıcınızda şu adrese gidin: http://localhost/phpmyadmin
+### 🇹🇷 Türkçe
 
-2. Sol menüden **"New"** (Yeni) butonuna tıklayın
+**Misyonumuz:** Türkiye'nin 81 ilinde yaşayan 850.000'den fazla bireyin sosyal haklarına dijital yollarla erişimini kolaylaştırmak; bilgiye erişim eşitsizliğini ortadan kaldırmak ve sosyal adaletin teknoloji aracılığıyla güçlendirilmesine öncülük etmek.
 
-### 👤 Kullanıcı Paneli3. Veritabanı adı: `sosyal_hizmet_db`
+**Vizyonumuz:** Herkesin sosyal hak bilincine sahip olduğu, dijital araçların sosyal adalet için kullanıldığı ve akademik araştırmaların politika değişikliğine dönüştüğü sürdürülebilir bir dijital ekosistem inşa etmek.
 
-- ✅ Kayıt ve giriş sistemi4. Collation: `utf8mb4_turkish_ci`
+### 🇬🇧 English
 
-- ✅ Profil yönetimi ve şifre değiştirme5. **Create** (Oluştur) butonuna tıklayın
+**Our Mission:** To empower 850,000+ individuals across all 81 provinces of Turkey with digital access to their social rights — eliminating information inequality and pioneering the use of technology for social justice.
 
-- ✅ Şifremi unuttum (e-posta ile sıfırlama)6. Oluşturulan veritabanına tıklayın
+**Our Vision:** To build a sustainable digital ecosystem where everyone is aware of their social rights, digital tools serve social justice, and academic research translates into policy change.
 
-- ✅ Sipariş geçmişi görüntüleme7. Üst menüden **Import** (İçe Aktar) sekmesine gidin
+---
 
-- ✅ Gelir testi hesaplama aracı8. **Choose File** butonuna tıklayıp `database.sql` dosyasını seçin
+## 📊 Rakamlarla Platform / Platform at a Glance
 
-- ✅ Balthazard formülü ile engel oranı hesaplama9. **Go** (Git) butonuna tıklayın
+| Metrik / Metric | Değer / Value |
+|---|---|
+| 🏙️ Hedef İl / Target Provinces | **81 il / provinces** |
+| 👥 Hedef Kullanıcı / Target Users | **850.000+** |
+| ⚖️ Sosyal Hak & Mevzuat / Social Rights & Legislation | **71+** |
+| 📚 E-Learning Modülleri / E-Learning Modules | **Kurs + Video + Test + Sertifika** |
+| 🤝 Danışmanlık Uzmanı / Consulting Experts | **Sosyal çalışmacı, avukat, akademisyen** |
+| 🔬 Araştırma Ortakları / Research Partners | **Anonim veri + Akademik kuruluşlar** |
+| 🔓 Lisans / License | **Açık Kaynak / Open Source** |
 
+---
 
+## 🏗️ Proje Ekosistemi / Project Ecosystem
 
-### 👨‍💼 Admin Paneli### Adım 4: Yapılandırma
+Dijital Sosyal Hak Platformu dört ana sütun üzerine inşa edilmiştir:
 
-- ✅ Kullanıcı yönetimi (görüntüleme, düzenleme, silme)1. `config/database.php` dosyasını açın
+*The Digital Social Rights Platform is built on four core pillars:*
 
-- ✅ Sipariş yönetimi (oluşturma, düzenleme, durum güncelleme)2. Veritabanı bilgilerini kontrol edin:
+### 📚 1. Eğitim / E-Learning
 
-- ✅ Ödeme kayıtları (ekleme, görüntüleme)```php
+> Bilgiye erişim, değişimin ilk adımıdır. / *Access to knowledge is the first step to change.*
 
-- ✅ Fatura yönetimi (oluşturma, hesaplama)define('DB_HOST', 'localhost');
+- **Kurs Sistemi:** Yapılandırılmış müfredat ile sosyal hak eğitimleri
+- **Video İçerikler:** Uzman tarafından hazırlanmış açıklayıcı videolar
+- **Testler & Değerlendirme:** Bilgi pekiştirme sınavları
+- **Sertifikalar:** Tamamlama belgesi ile kariyer desteği
+- **Çevrimdışı Erişim:** PWA desteği ile internet bağlantısı olmadan kullanım
 
-- ✅ Ürün/Paket yönetimidefine('DB_USER', 'root');
+### 👥 2. Canlı Danışmanlık / Live Consulting
 
-- ✅ Hizmet yönetimidefine('DB_PASS', '');
+> Her sorunun bir uzmanı vardır. / *Every problem has an expert.*
 
-- ✅ Kategori yönetimidefine('DB_NAME', 'sosyal_hizmet_db');
+- **WebSocket Teknolojisi:** Gerçek zamanlı mesajlaşma ve destek
+- **Uzman Eşleştirme:** Soruna uygun uzmanla akıllı eşleştirme algoritması
+- **Video Görüşme:** Entegre video konferans desteği
+- **Randevu Sistemi:** Esnek zamanlama ve takvim yönetimi
+- **Gizlilik Koruması:** KVKK uyumlu oturum yönetimi
 
-- ✅ İçerik yönetimi (blog, rehber içerikleri)```
+### 🎥 3. Canlı Yayın / Webinar & Live Stream
 
-- ✅ Duyuru yönetimi (e-posta bildirimleri ile)3. Gerekirse şifre kısmını XAMPP ayarlarınıza göre güncelleyin
+> Bilgi yayılır, etki büyür. / *Knowledge spreads, impact grows.*
 
-- ✅ Mesaj kutusu
+- **YouTube Live Entegrasyonu:** Geniş kitlelere ulaşan yayınlar
+- **Canlı Anket (Polling):** Katılımcılardan anlık geri bildirim
+- **Katılım Takibi:** Otomatik devam kaydı ve raporlama
+- **Soru-Cevap Oturumları:** Moderatörlü interaktif Q&A
+- **Kayıt Arşivi:** Tüm yayınların erişilebilir dijital kütüphanesi
 
-- ✅ Sosyal medya ayarları### Adım 5: Site URL Ayarı
+### 🔬 4. Araştırma / Research
 
-1. `config/config.php` dosyasını açın
+> Veri, politikayı şekillendirir. / *Data shapes policy.*
 
-### 🧮 Hesaplama Araçları2. `SITE_URL` değerini kontrol edin:
+- **Anonim Veri Analizi:** KVKK uyumlu gizlilik korumalı araştırma
+- **Akademik Ortaklıklar:** Üniversiteler ve düşünce kuruluşları ile iş birliği
+- **Politika Etki Raporları:** Karar vericilere yönelik veri odaklı raporlar
+- **Trend Analizi:** Sosyal hak erişim desenlerinin haritalanması
+- **Açık Veri Seti:** Araştırmacılar için anonim veri paylaşımı
 
-- ✅ **Gelir Testi:** 2024 asgari ücret bazlı hane geliri hesaplama```php
+---
 
-- ✅ **Balthazard Hesaplama:** Çoklu engel oranlarını birleştirme formülüdefine('SITE_URL', 'http://localhost/sosyal-hizmet-rehberlik');
+## 🛠️ Teknik Mimari / Technical Architecture
+
+### 🇹🇷 Türkçe
 
 ```
+┌─────────────────────────────────────────────────────────────┐
+│                    KULLANICI KATMANI                         │
+│          Web (Bootstrap 5) · PWA · Mobil Uyumlu             │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────┐
+│                    API KATMANI                               │
+│        RESTful API · WebSocket · JWT Auth                    │
+└──────┬──────────────┬──────────────┬──────────────┬─────────┘
+       │              │              │              │
+  ┌────▼────┐   ┌────▼────┐   ┌────▼────┐   ┌────▼────┐
+  │ E-Learn │   │ Danış.  │   │ Webinar │   │Araştırma│
+  │ Modülü  │   │ Modülü  │   │ Modülü  │   │ Modülü  │
+  └────┬────┘   └────┬────┘   └────┬────┘   └────┬────┘
+       └──────────────┴──────────────┴──────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────┐
+│                   VERİTABANI KATMANI                         │
+│           MySQL · Redis Cache · Anonim Araştırma DB          │
+└─────────────────────────────────────────────────────────────┘
+```
 
-### 📧 E-posta Sistemi
+### Temel Özellikler
 
-- ✅ Şifre sıfırlama e-postaları### Adım 6: Klasör İzinleri
+| Özellik | Teknoloji |
+|---|---|
+| **Backend** | PHP 7.4+ (Microservices-ready) |
+| **Veritabanı** | MySQL 5.7+ / MariaDB |
+| **Frontend** | Bootstrap 5, HTML5, CSS3, JavaScript |
+| **Gerçek Zamanlı** | WebSocket |
+| **E-posta** | PHPMailer (SMTP) |
+| **Güvenlik** | KVKK uyumlu, AES-256-CBC şifreleme, CSRF, PDO |
+| **Ölçeklendirme** | K8s-ready, Microservices mimarisi |
+| **CDN & Cache** | Redis, Varnish desteği |
+| **İzleme** | Datadog APM entegrasyonu |
+| **Feature Flags** | DevCycle entegrasyonu |
+| **Çok Dil** | TR / EN / AR (POEditor) |
 
-- ✅ Hoş geldin e-postalarıAşağıdaki klasörlerin yazma iznine sahip olduğundan emin olun:
+### 🔐 Güvenlik & Uyumluluk
 
-- ✅ Sipariş onay e-postaları- `uploads/`
+- ✅ **KVKK Uyumlu** veri işleme ve kullanıcı rızası yönetimi
+- ✅ **SQL Injection Koruması** — PDO prepared statements
+- ✅ **XSS Koruması** — `htmlspecialchars` ile çıktı temizleme
+- ✅ **CSRF Koruması** — Token tabanlı form doğrulaması
+- ✅ **Şifre Güvenliği** — `password_hash` / `password_verify`
+- ✅ **AES-256-CBC** ile hassas veri şifreleme
+- ✅ **Session Güvenliği** — Güvenli çerez yönetimi
+- ✅ **Sosyal Hak Uygunluk Algoritması** — Şeffaf hesaplama formülleri
 
-- ✅ Duyuru bildirimleri (toplu e-posta)- `uploads/products/`
+---
 
-- `uploads/contents/`
+## 📈 Sosyal Etki Metrikleri / Social Impact Metrics
 
----- `uploads/users/`
+Platformun başarısını dört boyutta ölçüyoruz:
 
+*We measure the platform's success across four dimensions:*
 
+### 🗺️ Erişim / Access
+- 80+ ilde aktif kullanıcı varlığı
+- Kırsal ve kentsel nüfusa eşit erişim
+- Çok dilli destek (TR/EN/AR)
 
-## 🛠 TeknolojilerWindows'ta bu klasörleri manuel oluşturun veya site ilk çalıştığında otomatik oluşturulacaktır.
+### 📖 Eğitim / Education
+- Kurs tamamlanma oranı (hedef: %75+)
+- Sertifika kazanım sayısı
+- Kullanıcı başına öğrenme saati
 
+### 🤝 Danışmanlık / Consulting
+- Oturum başarı oranı
+- Ortalama çözüm süresi
+- Kullanıcı memnuniyet skoru (NPS)
 
+### 🏛️ Araştırma & Politika / Research & Policy
+- Paylaşılan anonim veri seti sayısı
+- Akademik yayın sayısı
+- Politika değişikliğine katkı sağlanan alan sayısı
 
-- **Backend:** PHP 7.4+### Adım 7: Siteye Erişim
+---
 
-- **Veritabanı:** MySQL 5.7+ / MariaDBTarayıcınızda şu adreslere gidin:
+## 🤝 Katılım Yolları / How to Contribute
 
-- **Frontend:** Bootstrap 5, HTML5, CSS3, JavaScript
+Dijital Sosyal Hak Platformu açık kaynak bir girişimdir. Her arka plandan katkıya açığız:
 
-- **E-posta:** PHPMailer (SMTP)#### Ana Site
+*The Digital Social Rights Platform is an open source initiative. We welcome contributions from all backgrounds:*
 
-- **Sunucu:** Apache (XAMPP)```
+### 👨‍💻 Geliştiriciler / Developers
+```
+- Backend: PHP, MySQL, API geliştirme
+- Frontend: Bootstrap, JavaScript, PWA
+- DevOps: Docker, K8s, CI/CD pipeline
+- Güvenlik: Penetrasyon testi, kod incelemesi
+```
 
-- **Karakter Seti:** UTF-8 (Türkçe desteği)http://localhost/sosyal-hizmet-rehberlik
+### 👩‍⚕️ Sosyal Çalışmacılar / Social Workers
+```
+- Alan uzmanlığı: Sosyal hak içerik doğrulama
+- Kullanıcı araştırması: Gerçek kullanıcı geri bildirimi
+- Vaka çalışmaları: Anonim başarı hikayeleri
+```
 
+### ⚖️ Avukatlar / Lawyers
+```
+- Mevzuat güncellemeleri: Yeni yasa ve yönetmelik takibi
+- Hukuki içerik: Platform rehberlik içeriklerinin doğruluğu
+- Danışmanlık havuzu: Canlı hukuki danışmanlık desteği
+```
+
+### 🔬 Araştırmacılar / Researchers
+```
+- Veri bilimi: Anonim veri analizi ve görselleştirme
+- Akademik ortaklık: Araştırma projesi iş birlikleri
+- Politika araştırması: Veri odaklı politika önerileri
+```
+
+**Katkıda bulunmak için:** [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını inceleyin veya bir [Issue](https://github.com/senih25/dijital-sosyal-hak-platformu/issues) açın.
+
+---
+
+## 💰 Ekonomik Model & Sürdürülebilirlik / Economic Model & Sustainability
+
+Platform, uzun vadeli sürdürülebilirlik için çeşitlendirilmiş bir gelir modeline sahiptir:
+
+*The platform uses a diversified revenue model for long-term sustainability:*
+
+| Kaynak / Source | Model | Açıklama / Description |
+|---|---|---|
+| 🏛️ **Kamu Kontratları** | B2G | Belediye ve bakanlıklarla sosyal hizmet dijitalleştirme |
+| 📚 **E-Learning** | Freemium | Temel ücretsiz, premium içerik ücretli |
+| 👥 **Uzman Danışmanlık** | Komisyon | Platform aracılık ücreti |
+| 🎓 **Kurumsal Eğitim** | B2B | Üniversite ve STK'lara özel eğitim paketi |
+| 🤝 **Sponsorluklar** | CSR | Kurumsal sosyal sorumluluk ortaklıkları |
+| 🔬 **Araştırma Hibeleri** | Grant | TÜBİTAK, AB, uluslararası fon kuruluşları |
+
+> 💡 **Sürdürülebilirlik İlkesi:** Platformun temel sosyal hak rehberliği her zaman **ücretsiz** kalacaktır.
+> *The platform's core social rights guidance will always remain **free**.*
+
+---
+
+## 🚀 Hızlı Başlangıç / Quick Start
+
+### 🐳 Docker ile (Önerilen / Recommended)
+
+```bash
+# Repoyu klonlayın / Clone the repository
+git clone https://github.com/senih25/dijital-sosyal-hak-platformu.git
+cd dijital-sosyal-hak-platformu
+
+# Ortam değişkenlerini ayarlayın / Set up environment variables
+cp .env.example .env
+# .env dosyasını kendi değerlerinizle doldurun / Fill in your values
+
+# Docker ile çalıştırın / Run with Docker
+docker-compose up -d
+
+# Tarayıcıda açın / Open in browser
+# http://localhost:8080
+```
+
+### 🖥️ Yerel Geliştirme / Local Development (XAMPP)
+
+```bash
+# Gereksinimler / Requirements:
+# - XAMPP (PHP 7.4+ ve MySQL 5.7+)
+# - Web tarayıcısı / Web browser
+# - VS Code (önerilen / recommended)
+
+# 1. XAMPP'i başlatın (Apache + MySQL)
+# 2. Projeyi htdocs'a kopyalayın
+cp -r dijital-sosyal-hak-platformu/ C:\xampp\htdocs\
+
+# 3. Yapılandırmayı güncelleyin / Update config
+cp config/config.example.php config/config.php
+# config/config.php içinde SITE_URL'yi güncelleyin
+
+# 4. Veritabanını başlatın / Initialize database
+# phpMyAdmin → Yeni DB: sosyal_hizmet_db (utf8mb4_turkish_ci)
+# Import: database.sql
+
+# 5. Siteye erişin / Access the site
+# http://localhost/dijital-sosyal-hak-platformu
+```
+
+### 🗄️ Veritabanı Başlatma / Database Initialization
+
+```bash
+# phpMyAdmin veya MySQL CLI ile / via phpMyAdmin or MySQL CLI
+mysql -u root -p sosyal_hizmet_db < database.sql
+mysql -u root -p sosyal_hizmet_db < data_management_schema.sql
+```
+
+### 🧪 Test Verisi / Test Data
+
+| Rol / Role | E-posta / Email | Şifre / Password |
+|---|---|---|
+| Admin | admin@sosyalhizmet.com | admin123 |
+| Kullanıcı / User | musteri@test.com | musteri123 |
+
+> ⚠️ **ÖNEMLİ / IMPORTANT:** Canlı yayına almadan önce tüm varsayılan şifreleri değiştirin!
+> *Change all default passwords before going live!*
+
+### 🔧 Bağımlılıklar / Dependencies
+
+```bash
+# PHP bağımlılıkları / PHP dependencies
+composer install
+
+# Ortam değişkenleri (üretim) / Environment variables (production)
+# Doppler kullanımı önerilir / Doppler is recommended for secrets
 ```
 
 ---
 
-#### Admin Paneli
+## 🗺️ Yol Haritası / Roadmap
 
-## 📥 Kurulum```
+### 📅 2026
 
-http://localhost/sosyal-hizmet-rehberlik/admin
+#### 🌱 Faz 1: Soft Launch (Q1-Q2 2026)
+- [ ] Temel platform tamamlama (E-Learning + Danışmanlık)
+- [ ] 10 pilot il lansmanı
+- [ ] **50.000 kullanıcı** hedefi
+- [ ] İlk akademik araştırma ortaklıkları
+- [ ] Beta test ve kullanıcı geri bildirim döngüsü
 
-### 1️⃣ Gereksinimler```
+#### 🌿 Faz 2: Bölgesel Genişleme (Q3-Q4 2026)
+- [ ] Webinar modülü tam lansman
+- [ ] 30 ile genişleme
+- [ ] **200.000 kullanıcı** hedefi
+- [ ] Çok dilli destek aktivasyonu (EN/AR)
+- [ ] İlk kamu ortaklığı kontratı
 
+### 📅 2027
 
+#### 🌳 Faz 3: Ulusal Kapsam (Q1-Q2 2027)
+- [ ] 81 ilin tamamına erişim
+- [ ] **500.000 kullanıcı** hedefi
+- [ ] Araştırma veri merkezi aktivasyonu
+- [ ] Politika etki raporu yayını
+- [ ] Mobil uygulama lansmanı (iOS + Android)
 
-- XAMPP (PHP 7.4+ ve MySQL 5.7+)**Varsayılan Admin Girişi:**
+#### 🌲 Faz 4: Ekosistem Olgunluğu (Q3-Q4 2027)
+- [ ] **850.000+ kullanıcı** hedefi
+- [ ] Uluslararası model paylaşımı
+- [ ] Açık veri seti yayını (anonim)
+- [ ] Sürdürülebilir gelir modeli aktivasyonu
+- [ ] Sonraki nesil platform geliştirme
 
-- Web tarayıcısı (Chrome, Firefox, Edge önerilir)- E-posta: `admin@sosyalhizmet.com`
+---
 
-- Metin editörü (VS Code önerilir)- Şifre: `admin123`
+## 📁 Proje Yapısı / Project Structure
 
-
-
-### 2️⃣ XAMPP Kurulumu## 📁 Proje Yapısı
-
-
-
-1. XAMPP'i indirin: https://www.apachefriends.org/```
-
-2. Kurulumu tamamlayınsosyal-hizmet-rehberlik/
-
-3. **XAMPP Control Panel**'i açın│
-
-4. **Apache** ve **MySQL** servislerini başlatın├── admin/                      # Admin paneli
-
-│   ├── includes/              # Admin header/footer
-
-### 3️⃣ Projeyi Yerleştirme│   └── index.php              # Admin ana sayfa
-
+```
+dijital-sosyal-hak-platformu/
 │
-
-```bash├── assets/                     # Statik dosyalar
-
-# Projeyi XAMPP htdocs klasörüne kopyalayın│   ├── css/                   # CSS dosyaları
-
-C:\xampp\htdocs\sosyal-hizmet-rehberlik\│   ├── js/                    # JavaScript dosyaları
-
-```│   └── images/                # Görseller
-
+├── 📂 admin/                   # Admin paneli / Admin panel
+│   └── includes/               # Admin header/footer
 │
-
-### 4️⃣ Yapılandırma Dosyaları├── config/                     # Yapılandırma dosyaları
-
-│   ├── config.php             # Ana config
-
-#### config/database.php│   └── database.php           # Veritabanı bağlantısı
-
-```php│
-
-define('DB_HOST', 'localhost');├── includes/                   # Ortak dosyalar
-
-define('DB_USER', 'root');│   ├── header.php             # Site başlığı
-
-define('DB_PASS', ''); // XAMPP varsayılan şifre boş│   ├── footer.php             # Site alt bilgisi
-
-define('DB_NAME', 'sosyal_hizmet_db');│   └── functions.php          # Yardımcı fonksiyonlar
-
-define('DB_CHARSET', 'utf8mb4');│
-
-```├── user/                       # Kullanıcı paneli
-
-│   └── dashboard.php          # Kullanıcı ana sayfa
-
-#### config/config.php│
-
-```php├── uploads/                    # Yüklenen dosyalar
-
-define('SITE_URL', 'http://localhost/sosyal-hizmet-rehberlik');│
-
-define('SITE_NAME', 'Sosyal Hizmet Rehberlik');├── index.php                   # Ana sayfa
-
-```├── hizmetlerimiz.php          # Hizmetler sayfası
-
-├── rehberlik.php              # Sosyal hak rehberliği
-
----├── iletisim.php               # İletişim sayfası
-
-├── login.php                  # Giriş sayfası
-
-## 🗄 Veritabanı Yapılandırması├── logout.php                 # Çıkış işlemi
-
-├── kvkk.php                   # KVKK metni
-
-### Adım 1: phpMyAdmin'e Giriş├── database.sql               # Veritabanı SQL dosyası
-
-```├── .htaccess                  # Apache yapılandırması
-
-http://localhost/phpmyadmin└── README.md                  # Bu dosya
-
-``````
-
-
-
-### Adım 2: Veritabanı Oluşturma## 🎯 Özellikler
-
-1. Sol menüden **"New"** butonuna tıklayın
-
-2. **Veritabanı adı:** `sosyal_hizmet_db`### Kullanıcı Tarafı
-
-3. **Collation:** `utf8mb4_turkish_ci` (Türkçe karakter desteği için önemli!)✅ Ana sayfa ile hero section
-
-4. **Create** butonuna tıklayın✅ 3 hesaplama aracı (Gelir testi, Engel oranı, Sosyal haklar)
-
-✅ Hızlı yardım arama
-
-### Adım 3: SQL Dosyasını İçe Aktarma✅ Hizmetler ve e-kitap mağazası
-
-1. Oluşturduğunuz `sosyal_hizmet_db` veritabanına tıklayın✅ Blog, mevzuat ve akademik içerikler
-
-2. Üst menüden **Import** sekmesine gidin✅ Filtreleme ve arama özellikleri
-
-3. **Choose File** butonuna tıklayın✅ İletişim formu (KVKK uyumlu)
-
-4. `database.sql` dosyasını seçin✅ Responsive tasarım
-
-5. **Go** butonuna tıklayın✅ WhatsApp entegrasyonu
-
-6. ✅ "Import has been successfully finished" mesajını görmelisiniz✅ Sosyal medya bağlantıları
-
-
-
-### Veritabanı Tabloları (Toplam 16 tablo)### Admin Paneli
-
-- ✅ users (kullanıcılar)✅ Dashboard (istatistikler)
-
-- ✅ products (ürünler/paketler)✅ Kullanıcı yönetimi
-
-- ✅ orders (siparişler)✅ İçerik yönetimi (Blog, mevzuat, akademik)
-
-- ✅ order_items (sipariş kalemleri)✅ Kategori yönetimi
-
-- ✅ payments (ödemeler)✅ Hizmet yönetimi
-
-- ✅ invoices (faturalar)✅ Ürün (e-kitap) yönetimi
-
-- ✅ services (hizmetler)✅ Sipariş yönetimi
-
-- ✅ categories (kategoriler)✅ Mesaj yönetimi
-
-- ✅ contents (içerikler)✅ Duyuru yönetimi
-
-- ✅ announcements (duyurular)✅ Site ayarları
-
-- ✅ messages (mesajlar)
-
-- ✅ settings (ayarlar)### Kullanıcı Paneli
-
-- ✅ social_media (sosyal medya linkleri)✅ Profil yönetimi
-
-- ✅ password_resets (şifre sıfırlama tokenları)✅ Sipariş geçmişi
-
-- ✅ calculations (hesaplama kayıtları)✅ Kayıtlı hesaplamalar
-
-- ✅ contact_messages (iletişim mesajları)✅ Güvenli oturum yönetimi
-
-
-
----## 🔐 Güvenlik
-
-
-
-## 🚀 Kullanım- CSRF koruması
-
-- SQL Injection koruması (PDO prepared statements)
-
-### Siteye Erişim- XSS koruması (htmlspecialchars)
-
-```- Şifre hashleme (password_hash)
-
-http://localhost/sosyal-hizmet-rehberlik- KVKK uyumlu veri toplama
-
-```- Session güvenliği
-
-
-
-### Admin Paneline Erişim## 🛠️ Özelleştirme
-
+├── 📂 api/                     # RESTful API uç noktaları
+├── 📂 app/                     # Uygulama çekirdeği / App core
+├── 📂 config/                  # Yapılandırma dosyaları
+│   ├── config.php              # Ana yapılandırma
+│   ├── database.php            # Veritabanı bağlantısı
+│   ├── doppler.php             # Gizli değer yönetimi
+│   ├── devcycle.php            # Feature flags
+│   ├── datadog.php             # APM izleme
+│   └── localization.php       # Çok dilli destek
+│
+├── 📂 core/                    # Temel framework sınıfları
+├── 📂 includes/                # Ortak bileşenler (header, footer)
+├── 📂 modules/                 # Özellik modülleri (E-Learn, Danışm., vb.)
+├── 📂 lang/                    # Dil dosyaları (TR/EN/AR)
+├── 📂 docs/                    # Detaylı dokümantasyon
+├── 📂 tests/                   # Test suite
+├── 📂 automation/              # CI/CD ve otomasyon betikleri
+│
+├── index.php                   # Ana sayfa
+├── database.sql                # Temel veritabanı şeması
+├── data_management_schema.sql  # Analitik veri şeması
+├── docker-compose.yml          # Docker yapılandırması
+├── .env.example                # Ortam değişkeni şablonu
+└── README.md                   # Bu dosya / This file
 ```
-
-http://localhost/sosyal-hizmet-rehberlik/admin### Site Ayarlarını Değiştirme
-
-```1. Admin paneline giriş yapın
-
-2. **Ayarlar** menüsüne gidin
-
----3. İletişim bilgileri, sosyal medya linkleri vb. güncelleyin
-
-
-
-## 🔐 Giriş Bilgileri### Logo ve Tasarım
-
-- Logo: `assets/images/` klasörüne ekleyin
-
-### 👨‍💼 Admin Hesabı- Renkler: `assets/css/style.css` dosyasındaki CSS değişkenlerini düzenleyin
-
-- **E-posta:** admin@sosyalhizmet.com- İkonlar: Font Awesome kullanılmaktadır
-
-- **Şifre:** admin123
-
-### E-posta Ayarları
-
-### 👤 Test Müşteri Hesabı`includes/functions.php` dosyasındaki `sendEmail()` fonksiyonunu SMTP ayarları ile güncelleyin.
-
-- **E-posta:** musteri@test.com
-
-- **Şifre:** musteri123## 📧 Destek
-
-
-
-> ⚠️ **ÖNEMLİ:** Canlı yayına almadan önce admin şifresini mutlaka değiştirin!Herhangi bir sorun yaşarsanız:
-
-- E-posta: admin@sosyalhizmet.com
-
----- Veritabanı hatalarını `config/config.php` içinde hata raporlamayı açarak kontrol edin
-
-
-
-## 📧 E-posta Yapılandırması## 📝 Lisans
-
-
-
-E-posta sistemi şifre sıfırlama ve duyuru bildirimleri için gereklidir.Bu proje eğitim ve ticari kullanım için geliştirilmiştir.
-
-
-
-### Gmail ile SMTP Kurulumu (Önerilen)## 🎉 Başarılar!
-
-
-
-#### 1️⃣ Gmail Uygulama Şifresi Oluşturma:Site başarıyla kuruldu! Güvenli ve kullanışlı bir platform oluşturdunuz.
-
-
-
-1. Google hesabınıza gidin: https://myaccount.google.com/security---
-
-2. **2 Adımlı Doğrulama**'yı etkinleştirin (zorunlu)
-
-3. **Uygulama şifreleri** bölümünü bulun**Not:** Production ortamına almadan önce:
-
-4. "Sosyal Hizmet Rehberlik" adıyla uygulama şifresi oluşturun1. Hata raporlamayı kapatın (`config/config.php`)
-
-5. Oluşturulan 16 haneli şifreyi kopyalayın2. Veritabanı şifresi belirleyin
-
-3. SSL sertifikası kurun (HTTPS)
-
-#### 2️⃣ config/email.php Düzenleme:4. `.htaccess` dosyasındaki güvenlik ayarlarını aktif edin
-
-5. Varsayılan admin şifresini değiştirin
-
-```php
-define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'sizin-email@gmail.com'); // Değiştirin
-define('SMTP_PASSWORD', 'xxxx xxxx xxxx xxxx'); // Uygulama şifresi
-define('SMTP_FROM_EMAIL', 'sizin-email@gmail.com');
-define('SMTP_FROM_NAME', 'Sosyal Hizmet Rehberlik');
-```
-
-### Diğer E-posta Sağlayıcıları
-
-**Yandex Mail:**
-```php
-define('SMTP_HOST', 'smtp.yandex.com');
-define('SMTP_PORT', 465);
-```
-
-**Outlook/Hotmail:**
-```php
-define('SMTP_HOST', 'smtp-mail.outlook.com');
-define('SMTP_PORT', 587);
-```
-
-Detaylı bilgi için `EMAIL_SETUP.md` dosyasına bakın.
 
 ---
 
-## ⚙️ Önemli Notlar
+## 🔌 Entegrasyonlar / Integrations
 
-### 📁 Klasör İzinleri
-
-Aşağıdaki klasörlerin yazma izni olmalı (dosya yükleme için):
-```
-uploads/contents/
-uploads/products/
-uploads/users/
-```
-
-### 🔒 Güvenlik Tavsiyeleri
-
-1. ✅ Canlıya almadan **admin şifresini değiştirin**
-2. ✅ `config/database.php` dosyasına güçlü şifre koyun
-3. ✅ Test kullanıcılarını silin veya şifrelerini değiştirin
-4. ✅ HTTPS kullanın (SSL sertifikası)
-5. ✅ PHP hata mesajlarını kapatın (production'da)
-
-### 🌐 Canlı Sunucuya Taşıma
-
-1. Tüm dosyaları FTP ile sunucuya yükleyin
-2. phpMyAdmin'de yeni veritabanı oluşturun
-3. `database.sql` dosyasını içe aktarın
-4. `config/database.php` ve `config/config.php` dosyalarını sunucu bilgilerinize göre güncelleyin
-5. `config/email.php` dosyasını yapılandırın
-6. Klasör izinlerini kontrol edin (uploads/)
+| Entegrasyon | Amaç / Purpose | Dokümantasyon |
+|---|---|---|
+| **Doppler** | Gizli değer yönetimi / Secrets management | [DOPPLER_SETUP.md](docs/DOPPLER_SETUP.md) |
+| **POEditor** | Çok dilli destek (TR/EN/AR) | [POEDITOR_SETUP.md](docs/POEDITOR_SETUP.md) |
+| **Datadog** | APM izleme / Performance monitoring | [docs/](docs/) |
+| **DevCycle** | Özellik bayrakları / Feature flags | [DEVCYCLE_SETUP.md](docs/DEVCYCLE_SETUP.md) |
+| **YouTube Live** | Webinar yayını / Webinar streaming | API entegrasyonu |
+| **PHPMailer** | E-posta bildirimleri / Email notifications | [EMAIL_SETUP.md](docs/) |
 
 ---
 
-## 🧮 Hesaplama Formülleri
+## 🐛 Sorun Giderme / Troubleshooting
 
-### Gelir Testi (2024)
-```
-Asgari Ücret: 17,002 TL
-Hane Başına Limit:
-- 1 kişi: 1.0 × asgari ücret
-- 2 kişi: 1.5 × asgari ücret
-- 3 kişi: 2.0 × asgari ücret
-- 4 kişi: 2.5 × asgari ücret
-- 5+ kişi: 3.0 × asgari ücret + (her ek kişi için +0.5)
-```
+<details>
+<summary>Veritabanı Bağlantı Hatası / Database Connection Error</summary>
 
-### Balthazard Formülü
-```
-Toplam engel oranı hesaplama (en yüksekten düşüğe):
-Toplam = Oran₁
-Kalan = 100 - Toplam
-Ekleme = Kalan × (Oran₂ / 100)
-Toplam = Toplam + Ekleme
-(Tüm oranlar için tekrarla)
-```
-
-**Örnek:**
-- %60 + %40 = 60 + (40 × 40%) = 60 + 16 = **76%**
-- %50 + %30 + %20 = 50 + 15 + 7 = **72%**
-
----
-
-## 🐛 Sorun Giderme
-
-### Veritabanı Bağlantı Hatası
 ```
 ✅ MySQL servisinin çalıştığından emin olun
 ✅ config/database.php bilgilerini kontrol edin
-✅ Veritabanı adının doğru olduğunu kontrol edin
+✅ Veritabanı adı: sosyal_hizmet_db
+✅ Collation: utf8mb4_turkish_ci
 ```
+</details>
 
-### Türkçe Karakter Sorunu
+<details>
+<summary>Türkçe Karakter Sorunu / Turkish Character Issue</summary>
+
 ```
 ✅ Veritabanı collation: utf8mb4_turkish_ci
-✅ Tablolar collation: utf8mb4_turkish_ci
 ✅ PHP dosyaları UTF-8 encoding ile kaydedilmeli
+✅ config/config.php içinde charset kontrolü yapın
+```
+</details>
+
+<details>
+<summary>E-posta Gönderilmiyor / Email Not Sending</summary>
+
+```
+✅ config/email.php içindeki SMTP bilgilerini kontrol edin
+✅ Gmail için Uygulama Şifresi oluşturun (2FA gerekli)
+✅ Firewall SMTP portlarını (587/465) engellemiyor mu kontrol edin
 ```
 
-### E-posta Gönderilmiyor
-```
-✅ SMTP bilgilerini kontrol edin
-✅ Gmail uygulama şifresini doğru kopyaladığınızdan emin olun
-✅ 2 Adımlı Doğrulama'nın aktif olduğunu kontrol edin
-✅ Firewall SMTP portlarını engellemiyorsa kontrol edin
-```
+Detaylı bilgi: `EMAIL_SETUP.md`
+</details>
 
-### 404 Sayfa Bulunamadı Hatası
+<details>
+<summary>404 Sayfa Bulunamadı / 404 Not Found</summary>
+
 ```
 ✅ Apache mod_rewrite modülünün aktif olduğundan emin olun
 ✅ .htaccess dosyasının mevcut olduğunu kontrol edin
 ✅ SITE_URL yapılandırmasını kontrol edin
 ```
+</details>
 
 ---
 
-## 📞 İletişim & Destek
+## 📄 Lisans / License
 
-Sorularınız için:
-- 📧 E-posta: destek@sosyalhizmet.com
-- 🌐 Web: http://localhost/sosyal-hizmet-rehberlik/iletisim.php
+Bu proje **MIT Lisansı** ile lisanslanmıştır — açık kaynak, özgür kullanım, sosyal etki odaklı.
 
----
+*This project is licensed under the **MIT License** — open source, free to use, focused on social impact.*
 
-## 🔌 Entegrasyonlar (Integrations)
-
-| Entegrasyon | Açıklama | Yapılandırma |
-|---|---|---|
-| **Doppler** | Gizli değer yönetimi | `config/doppler.php` · `docs/DOPPLER_SETUP.md` |
-| **POEditor** | Çok dilli destek (TR / EN / AR) | `config/localization.php` · `docs/POEDITOR_SETUP.md` |
-| **Datadog** | İsteğe bağlı APM izleme | `config/datadog.php` · `includes/monitoring.php` |
-| **DevCycle** | Özellik bayrakları | `config/devcycle.php` · `docs/DEVCYCLE_SETUP.md` |
-
-### Hızlı başlangıç
-
-```bash
-# Ortam değişkenlerini ayarlayın
-cp .env.example .env
-# .env dosyasını kendi değerlerinizle doldurun
-
-# Bağımlılıkları yükleyin
-composer install
-
-# Yerel sunucuyu başlatın
-php -S localhost:8080
-```
-
-> Üretim ortamında gizli değerleri `.env` yerine [Doppler](https://doppler.com) üzerinden yönetmeniz önerilir.
+Temel sosyal hak rehberliği her zaman ücretsiz kalacaktır. / *Core social rights guidance will always remain free.*
 
 ---
 
-## 📄 Lisans
+## 🙏 Teşekkürler / Acknowledgements
 
-Bu proje özel bir proje olup, tüm hakları saklıdır.
+Bu platform aşağıdaki kişi ve kuruluşların katkılarıyla hayat bulmaktadır:
+
+*This platform comes to life through the contributions of the following people and organizations:*
+
+- 👩‍⚕️ Sahada çalışan sosyal hizmet uzmanları / Social workers in the field
+- ⚖️ Sosyal haklar üzerine çalışan avukatlar / Lawyers working on social rights
+- 🎓 Akademik araştırmacılar / Academic researchers
+- 💻 Açık kaynak geliştiriciler / Open source developers
+- 🏛️ Hizmetlerin ulaşmasını sağlayan kamu kurumları / Public institutions enabling service delivery
 
 ---
 
-## 🙏 Teşekkürler
+<div align="center">
 
-Sosyal Hizmet Rehberlik platformunu kullandığınız için teşekkür ederiz!
+**"Teknoloji, sosyal adalet için en güçlü araçlardan biridir."**
+*"Technology is one of the most powerful tools for social justice."*
 
-**Son Güncelleme:** 14 Aralık 2025
-**Versiyon:** 1.0.0
+[![GitHub Stars](https://img.shields.io/github/stars/senih25/dijital-sosyal-hak-platformu?style=social)](https://github.com/senih25/dijital-sosyal-hak-platformu)
+[![GitHub Forks](https://img.shields.io/github/forks/senih25/dijital-sosyal-hak-platformu?style=social)](https://github.com/senih25/dijital-sosyal-hak-platformu/fork)
 
-## 📊 Veri Yönetimi ve Analitik (Yeni)
+**Son Güncelleme / Last Updated:** Şubat 2026 / February 2026
+**Versiyon / Version:** 2.0.0
 
-Bu sürümle birlikte aşağıdaki modüller eklendi:
+📧 destek@sosyalhizmet.com | 🌐 [GitHub](https://github.com/senih25/dijital-sosyal-hak-platformu)
 
-- `data_management_schema.sql`: Kullanıcı profilleri, sağlık kayıtları, sosyal hak geçmişi, hesaplama sonuçları, günlük analitik ve yedekleme iş kayıtları için tablo şemaları.
-- `user_profile_system.php`: KVKK uyumlu profil/sağlık verisi saklama, hassas alan şifreleme (AES-256-CBC), hesaplama sonucu geçmişi tutma.
-- `admin_analytics.php`: Admin için kullanıcı, popüler hizmet, hesaplama trendi ve gelir skoru raporları (grafik + tablo).
-- `backup_manager.php` + `backup_cli.php`: Günlük/haftalık/aylık/manuel yedek alma, checksum, kayıt, geri yükleme ve bulut entegrasyon iskeleti.
-
-### Hızlı Kullanım
-
-1. SQL şemasını veritabanına import edin:
-   - `data_management_schema.sql`
-2. Zamanlanmış görev örnekleri:
-   - Günlük: `php backup_cli.php gunluk`
-   - Haftalık: `php backup_cli.php haftalik`
-   - Aylık: `php backup_cli.php aylik`
-3. Rapor sayfası:
-   - `admin_analytics.php`
+</div>
