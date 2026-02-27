@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Dijital Sosyal Hak Platformu">
+  <rect width="512" height="512" rx="72" fill="#1e40af"/>
+  <circle cx="256" cy="170" r="74" fill="#bfdbfe"/>
+  <path d="M120 372c24-67 92-109 136-109s112 42 136 109" fill="none" stroke="#bfdbfe" stroke-width="38" stroke-linecap="round"/>
+</svg>

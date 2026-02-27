@@ -1,0 +1,8 @@
+language: php
+php:
+  - '8.2'
+
+script:
+  - php -l index.php
+  - php -l dashboard.php
+  - php -l calculate_income.php

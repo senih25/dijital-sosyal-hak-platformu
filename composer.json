@@ -1,0 +1,5 @@
+{
+    "require": {
+        "devcycle/php-sdk": "^2.0"
+    }
+}
