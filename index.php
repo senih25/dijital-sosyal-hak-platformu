@@ -2,9 +2,7 @@
 
 require 'vendor/autoload.php';
 
-// Load environment variables from .env
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// Environment variables (e.g. DEV_CYCLE_SDK_KEY) are expected to be set by the server environment.
 
 // Initialize DevCycleManager
 $devCycleManager = new DevCycle\DevCycleManager(getenv('DEV_CYCLE_SDK_KEY'));
