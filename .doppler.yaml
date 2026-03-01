@@ -4,4 +4,3 @@ project:
 
 config:
   environment: "development"
-  api_key: "your_api_key_here"
