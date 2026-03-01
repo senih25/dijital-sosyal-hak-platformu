@@ -1,21 +1,25 @@
-# .gitignore
-
-# Node modules
-node_modules/
+# Environment
+.env
+config.php
 
 # Logs
-logs/
 *.log
+logs/
+
+# Database
+*.sql
+
+# Uploads
+uploads/
 
 # Dependency directories
-jspm_packages/ 
+vendor/
+node_modules/
+jspm_packages/
 
-# Ignore environment files
-.env
+# OS
+.DS_Store
+Thumbs.db
 
-# Ignore Unix line endings
+# Git normalization
 * text=auto
-*.php text
-*.html text
-*.js text
-*.css text
