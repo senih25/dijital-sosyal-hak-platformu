@@ -35,12 +35,7 @@ This document provides instructions for installing and using Docker for the proj
 3. **Run the Docker Container**:
    - To run the container:
    ```bash
-   docker run -d -p 8080:8080 <your-image-name>
-   ```
-   - Replace `<your-image-name>` with the name you specified during the build.
-
-4. **Access the Application**:
-   - Open a web browser and navigate to `http://localhost:8080` to see your application running inside the Docker container.
+   docker run -d -p 80:80 <your-image-name>
 
 ## Troubleshooting
 
