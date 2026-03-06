@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-dev
+
+      - name: Validate configuration files
+        run: |
+          php -r "
+          require 'config/doppler.php';
+          \$config = DopplerConfig::getInstance();
+          echo 'DopplerConfig: OK' . PHP_EOL;
+          require 'config/localization.php';
+          \$lang = LanguageManager::getInstance();
+          echo 'LanguageManager: OK (' . \$lang->getCurrentLanguage() . ')' . PHP_EOL;
+          require 'config/datadog.php';
+          \$dd = DatadogConfig::getInstance();
+          echo 'DatadogConfig: ' . (\$dd->isEnabled() ? 'enabled' : 'disabled (no key)') . PHP_EOL;
+          "
+
+      - name: Deploy via rsync
+        if: ${{ vars.DEPLOY_HOST != '' }}
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='.env' \
+            --exclude='vendor/' \
+            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"

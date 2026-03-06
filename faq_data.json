@@ -1,0 +1,27 @@
+[
+  {
+    "category": "SGK İşlemleri",
+    "question": "SGK engelli emeklilik şartları nelerdir?",
+    "answer": "2026 güncel uygulamada temel olarak en az %40 ve üzeri engellilik oranı, uygun sigortalılık süresi ve prim günü şartları aranır. Kişinin sigorta başlangıç tarihi ve statüsü (4A/4B/4C) nihai koşulları değiştirir. Kesin değerlendirme SGK dosya incelemesiyle yapılır."
+  },
+  {
+    "category": "Evde Bakım Maaşı",
+    "question": "Evde bakım maaşı için gelir testi nasıl yapılır?",
+    "answer": "Gelir testinde hane toplam aylık net geliri, hanedeki kişi sayısına bölünerek kişi başı gelir bulunur. 2026 için asgari ücret 20.002 TL baz alınır ve başvuruya ilişkin mevzuat eşiği kapsamında değerlendirme yapılır. Ayrıca bakıma muhtaçlık kriteri de zorunludur."
+  },
+  {
+    "category": "Engelli Raporu",
+    "question": "Engelli sağlık kurulu raporu nasıl alınır?",
+    "answer": "Yetkili hastaneye başvuru sonrası branş muayeneleri tamamlanır ve sağlık kurulu nihai oranı belirler. Rapor oranına itirazlar il sağlık müdürlüğü süreci üzerinden yürütülür."
+  },
+  {
+    "category": "ÇÖZGER",
+    "question": "ÇÖZGER raporu hangi durumlarda kullanılır?",
+    "answer": "ÇÖZGER raporu 18 yaş altı çocuklar için düzenlenir. Özel eğitim, rehabilitasyon destekleri, sosyal yardımlar ve hak temelli resmi başvurularda kullanılır."
+  },
+  {
+    "category": "Sosyal Haklar",
+    "question": "Sosyal yardım başvurusunda hangi belgeler istenir?",
+    "answer": "Kimlik belgesi, gelir ve hane bilgileri, sağlık/engellilik belgeleri ve başvurulan destek türüne göre ek evraklar istenir. İl/ilçe kurumları ek belge talep edebilir."
+  }
+]

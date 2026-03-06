@@ -10,37 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if employee
+      - name: Check if repository owner
         id: check_employee
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.READ_GITHUB_ORG_MEMBERS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            try {
-              const response = await github.rest.orgs.checkMembershipForUser({
-                org: `github`,
-                username: context.payload.pull_request.user.login
-              });
+            const owner = context.repo.owner;
+            const prAuthor = context.payload.pull_request.user.login;
 
-              if (response.status === 204) {
-                return true;
-              } else {
-                return false;
-              }
-            } catch (error) {
-              console.log(error);
+            if (owner === prAuthor) {
+              return 'true';
+            } else {
               return 'false';
             }
 
       - name: Close PR
-        id: close_pr
         if: ${{ steps.check_employee.outputs.result == 'false' }}
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const body = `This pull request is being automatically closed because we do not accept external contributions to this repository.`;
+            const body = `
+This pull request was automatically closed.
+
+Currently this repository only accepts pull requests from the repository owner.
+Please open an issue instead if you have suggestions.
+`;
 
             await github.rest.issues.createComment({
               ...context.repo,

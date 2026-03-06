@@ -1,8 +1,10 @@
 <?php
-require_once '../config/config.php';
+require_once __DIR__ . '/config/config.php';
 
 // UTF-8 encoding ayarı
-$pdo->exec("SET NAMES utf8mb4 COLLATE utf8mb4_turkish_ci");
+if ($pdo instanceof PDO) {
+    $pdo->exec("SET NAMES utf8mb4 COLLATE utf8mb4_turkish_ci");
+}
 
 // Admin kontrolü
 if (!isLoggedIn() || !isAdmin()) {

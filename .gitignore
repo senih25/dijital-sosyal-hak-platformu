@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Environment
 .env
 config.php
@@ -24,3 +25,14 @@ Thumbs.db
 # Git normalization
 * text=auto
 .idea/ 
+=======
+config.php
+.env
+.env.local
+.env.*.local
+uploads/
+vendor/
+node_modules/
+*.log
+*.sql
+>>>>>>> release/v1

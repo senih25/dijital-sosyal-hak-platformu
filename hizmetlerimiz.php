@@ -26,6 +26,20 @@ try {
 }
 
 include 'includes/header.php';
+
+// İş geliştirme modülleri için demo veriler
+$paymentPreview = calculatePaymentBreakdown(2500, 'iyzico');
+$invoicePreview = createInvoiceRecord('Demo Müşteri', generateOrderNumber(), [
+    ['name' => 'Premium Danışmanlık Paketi', 'quantity' => 1, 'unit_price' => 1999],
+    ['name' => 'Hak Takip Ek Hizmeti', 'quantity' => 1, 'unit_price' => 499]
+]);
+$cargoPreview = getCargoTimeline('KRG' . rand(100000, 999999));
+$returnPreview = evaluateReturnRequest(date('Y-m-d', strtotime('-6 days')), 'return');
+$subscriptionPlans = getSubscriptionPlans();
+$subscriptionPreview = simulateSubscription('premium_monthly');
+$referralCode = generateReferralCode();
+$referralSample = calculateReferralCommission(2200, 0.12);
+$referralLevel = calculateReferralRewardLevel(2450);
 ?>
 
 <!-- Page Header -->
@@ -217,6 +231,101 @@ include 'includes/header.php';
                     </div>
                     <h5>Kişiselleştirilmiş</h5>
                     <p class="text-muted">Size özel çözümler ve danışmanlık</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- İş Geliştirme: E-Ticaret, Abonelik ve Referans -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3"><i class="fas fa-rocket me-2"></i>Yeni İş Geliştirme Modülleri</h2>
+            <p class="text-muted">E-ticaret, abonelik ve referans süreçlerini uçtan uca yönetin</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5><i class="fas fa-credit-card text-primary me-2"></i>Gelişmiş E-Ticaret</h5>
+                        <ul class="text-muted mb-3">
+                            <li>İyzico ve PayTR entegrasyon altyapısı</li>
+                            <li>Otomatik fatura hesaplaması (KDV dahil)</li>
+                            <li>Kargo takip ve iade/değişim uygunluk akışı</li>
+                        </ul>
+                        <?php if ($paymentPreview): ?>
+                            <div class="small">
+                                <strong>Örnek Ödeme:</strong> <?php echo escape($paymentPreview['provider']); ?><br>
+                                Brüt: <?php echo formatPrice($paymentPreview['gross_amount']); ?> •
+                                Komisyon: <?php echo formatPrice($paymentPreview['commission']); ?><br>
+                                Net Tahsilat: <strong><?php echo formatPrice($paymentPreview['net_amount']); ?></strong>
+                            </div>
+                        <?php endif; ?>
+                        <hr>
+                        <div class="small text-muted">
+                            Örnek Fatura: <strong><?php echo escape($invoicePreview['invoice_no']); ?></strong><br>
+                            Toplam: <?php echo formatPrice($invoicePreview['total']); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5><i class="fas fa-crown text-warning me-2"></i>Premium Abonelik Sistemi</h5>
+                        <ul class="text-muted mb-3">
+                            <li>Aylık / yıllık paket kurgusu</li>
+                            <li>Otomatik yenileme ve tahsilat planı</li>
+                            <li>Üyelik seviyeleri ve özel içerik erişimi</li>
+                        </ul>
+                        <div class="small">
+                            <?php foreach ($subscriptionPlans as $plan): ?>
+                                <div><?php echo escape($plan['title']); ?>: <strong><?php echo formatPrice($plan['price']); ?></strong></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <hr>
+                        <div class="small text-muted">
+                            Sonraki ödeme tarihi: <?php echo escape($subscriptionPreview['next_payment_date']); ?><br>
+                            Seviye: <strong><?php echo escape($subscriptionPreview['plan']['level']); ?></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5><i class="fas fa-user-friends text-success me-2"></i>Referans ve Ödül Sistemi</h5>
+                        <ul class="text-muted mb-3">
+                            <li>Otomatik referans kodu üretimi</li>
+                            <li>Satış bazlı komisyon hesaplama</li>
+                            <li>Referans performansına göre ödül seviyesi</li>
+                        </ul>
+                        <div class="small">
+                            Referans Kod Örneği: <strong><?php echo escape($referralCode); ?></strong><br>
+                            Komisyon (örnek satış): <?php echo formatPrice($referralSample['commission']); ?>
+                        </div>
+                        <hr>
+                        <div class="small text-muted">
+                            Ödül Seviyesi: <strong><?php echo escape($referralLevel); ?></strong><br>
+                            İade Uygunluk: <?php echo $returnPreview['eligible'] ? 'Uygun' : 'İncelemede'; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="alert alert-primary mb-0">
+                    <strong>Kargo Takip:</strong>
+                    <?php foreach ($cargoPreview as $step): ?>
+                        <span class="badge bg-light text-dark me-2 mb-1"><?php echo escape($step['status']); ?><?php echo $step['status'] !== 'Takip No' ? '' : ': ' . escape($step['time']); ?></span>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
